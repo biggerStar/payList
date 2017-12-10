@@ -9,7 +9,7 @@ var config = require("./../config.js");
 
 router.post('/submit', function(req,res){
     var data = req.body;
-    data.time = moment().format("YYYY-MM-DD HH:mm:ss");
+    data.time = moment().format("YYYY-MM-DD");
     console.log( data);
     config.table='remark';
     db.saveRemark(data, config, function(err, call){
@@ -18,8 +18,23 @@ router.post('/submit', function(req,res){
         } else {
             console.log("insert success");
             var content = {};
-            res.render('paylist/ok')
+            res.render('paylist/remarkOk')
         }
 });
 });
+router.get('/remove',function(req,res){
+    var data = req.query;
+    console.log(data);
+    config.table='remark';
+    db.removeRemark(data,config,function(err,callback){
+        if(err) {
+            console.log("err");
+        } else {
+            console.log("revome success");
+            res.render('paylist/remarkOk');
+        }
+
+});
+});
+
 module.exports = router;

@@ -55,6 +55,22 @@ function saveRemark(data, config, callback){
         db.close();
     });
 }
+function removeRemark(data,config,callback){
+    console.log("remove remark");
+    var db = mongoose.createConnection(config.host);
+    var remarkModel = db.model(config.table, remarkSchema);
+    var content = {comment:data.comment};
+    remarkModel.remove(content,function(err,result){
+        if(err){
+            console.log(err);
+         }else{
+            console.log("update");
+             callback(null, true);
+        }
+        db.close();
+    });
+}
+
 function find(content, config, callback) {
     var db = mongoose.createConnection(config.host);
     var listMode = db.model(config.table, listSchema);
@@ -79,3 +95,4 @@ module.exports.update = update;
 module.exports.deleteData = deleteData;
 module.exports.find = find;
 module.exports.saveRemark = saveRemark;
+module.exports.removeRemark=removeRemark;

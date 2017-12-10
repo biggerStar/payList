@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var paylist = require('./routes/paylist');
 var remark = require('./routes/remark');
 var app = express();
+var display = require('./routes/display');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +28,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/paylist', paylist);
 app.use('/remark', remark);
-
+app.use('/display', display);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
