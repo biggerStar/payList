@@ -16,7 +16,7 @@ router.post('/submit', function(req, res) {
     data.time = moment().format("YYYY-MM-DD HH:mm:ss");
     // console.log(req.body);
     config.table = 'list';
-    db.save(req.body,config,function(err,callback){
+    db.save(data,config,function(err,callback){
         if(err){
             console.log("err" + err);
         } else {
@@ -33,7 +33,8 @@ router.post('/submit', function(req, res) {
 
 router.get('/list', function(req, res) {
     config.table = "list";
-    db.find(config,function(err, callback){
+    var content = {money:{"$gt":0}};
+    db.find(content, config,function(err, callback){
                 if (err){
                     console.log("select err" + err);
                 } else {
