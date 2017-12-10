@@ -19,10 +19,11 @@ function save(data, config, callback){
     // instance
     var content = {comment:data.comment,userName:data.userName,money:data.money,type:data.type,time:data.time};
     var insertData = new listModel(content);
-    insertData.save(function(err){
+    insertData.save(function(err,result){
         if(err){
             console.log(err);
         }else{
+            callback(null, true);
             console.log('成功插入数据');
         }
         db.close();

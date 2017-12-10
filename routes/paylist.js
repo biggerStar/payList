@@ -21,6 +21,7 @@ router.post('/submit', function(req, res) {
             console.log("err" + err);
         } else {
             console.log("insert success");
+            res.render('paylist/ok');
         }
     });
     //var list = pay.select({});
@@ -36,7 +37,6 @@ router.get('/list', function(req, res) {
                 if (err){
                     console.log("select err" + err);
                 } else {
-                    console.log("hello");
                     console.log("result:" + callback);
                     res.render('paylist/list', {lists:callback});
                 }
