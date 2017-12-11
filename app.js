@@ -46,5 +46,4 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen(8080);
 module.exports = app;

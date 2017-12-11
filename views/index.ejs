@@ -71,11 +71,12 @@
 					备忘录
 				</h1>
 				<p>
+            <% remarks.forEach(function(remark){ %>
 <table class="table table-hover" style="word-break:break-all; word-wrap:break-all;">
 		<tbody>
-            <% var i=0 %>
-            <% remarks.forEach(function(remark){ %>
+            <% var i=2 %>
             <% i++ %>
+            <% var id=remark._id %>
 			<tr>
 		<!--		<td style="width:100px">
                     <%=i %>
@@ -97,9 +98,9 @@
                     <%=remark.time %>
                 </td>
             <td style="width:100px">             
-                <button class="btn btn-success" data-toggle="modal" data-target="#myModal1">删除 </button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#myModal<%=remark._id%>">删除 </button>
 
-        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade" id="myModal<%=remark._id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	        <div class="modal-dialog">
 		        <div class="modal-content">
 			        <div class="modal-header">
@@ -111,7 +112,7 @@
 				        </h4>
 			        <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">再想想</button>
-                        <button type="button" onclick='window.location.href="/remark/remove?comment=<%=remark.comment%>"' class="btn btn-primary">sure！</button>
+                        <button type="button" onclick='window.location.href="/remark/remove?_id=<%=id%>"' class="btn btn-primary">sure！</button>
                     </div>
 		        </div><!-- /.modal-content -->
 	        </div><!-- /.modal -->

@@ -59,8 +59,8 @@ function removeRemark(data,config,callback){
     console.log("remove remark");
     var db = mongoose.createConnection(config.host);
     var remarkModel = db.model(config.table, remarkSchema);
-    var content = {comment:data.comment};
-    remarkModel.remove(content,function(err,result){
+//    var content = {comment:data.comment};
+    remarkModel.remove(data,function(err,result){
         if(err){
             console.log(err);
          }else{
