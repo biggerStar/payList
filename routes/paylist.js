@@ -4,7 +4,7 @@ var router = express.Router();
 var pay = require('./../app/paylist.js');
 var qs = require("querystring");
 var db = require("./../app/db.js");
-var config = require("./../config.js");
+var config = require("./../conf/config.js");
 
 /* GET home page. */
 router.get('/add', function(req, res, next) {
@@ -32,6 +32,18 @@ router.post('/submit', function(req, res) {
 });
 
 router.get('/list', function(req, res) {
+    config.table = "list";
+    var content = {money:{"$gt":0}};
+    db.find(content, config,function(err, callback){
+                if (err){
+                    console.log("select err" + err);
+                } else {
+                    console.log("result:" + callback);
+                    res.render('paylist/list', {lists:callback});
+                }
+            });
+});
+router.post('/list', function(req, res) {
     config.table = "list";
     var content = {money:{"$gt":0}};
     db.find(content, config,function(err, callback){

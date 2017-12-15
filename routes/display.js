@@ -4,7 +4,7 @@ var router = express.Router();
 var pay = require('./../app/paylist.js');
 var qs = require("querystring");
  var db = require("./../app/db.js");
- var config = require("./../config.js");
+ var config = require("./../conf/config.js");
 
 
 router.get('/', function(req, res){

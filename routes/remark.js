@@ -5,7 +5,7 @@ var router = express.Router();
 var pay = require('./../app/paylist.js');
 var qs = require("querystring");
 var db = require("./../app/db.js");
-var config = require("./../config.js");
+var config = require("./../conf/config.js");
 
 router.post('/submit', function(req,res){
     var data = req.body;

@@ -74,15 +74,27 @@ function removeRemark(data,config,callback){
 function find(content, config, callback) {
     var db = mongoose.createConnection(config.host);
     var listMode = db.model(config.table, listSchema);
-    listMode.find(content,function(err,result){
+    var sort={time:-1}
+    listMode.find(content,null,{sort:{time:-1}},function(err,result){
         if(err){
             console.log(err);
         }else{
-            console.log("find :" + result);
             callback(null,result);
         }
         db.close();
         });
+}
+function findSomeTable(content,schema,config,callback){
+    var db = mongoose.createConnection(config.host);
+    var mode = db.model(config.table,schema);
+    mode.findOne(content, function(err, result){
+        if(err){
+            console.log(err);
+        } else{
+            callback(null,result);
+        }
+        db.close();
+    });
 }
 
 function update(data, config) {
@@ -96,3 +108,4 @@ module.exports.deleteData = deleteData;
 module.exports.find = find;
 module.exports.saveRemark = saveRemark;
 module.exports.removeRemark=removeRemark;
+module.exports.findSomeTable= findSomeTable;

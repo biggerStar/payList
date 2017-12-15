@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 /* GET home page. */
-var config = require("./../config.js");
+var config = require("./../conf/config.js");
 var db = require("./../app/db.js");
 
 router.get('/', function(req, res, next) {
@@ -16,6 +16,10 @@ router.get('/', function(req, res, next) {
             res.render('index', {remarks:callback});
         }
     });
+});
+router.get('/logout',function(req,res){
+    req.session.destroy();
+    res.render('login');
 });
 router.post('/submit', function(req,res){
     var data=req.body;

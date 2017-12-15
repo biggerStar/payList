@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>静大大的专属</title>
+      <!-- 引入 Bootstrap -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+   </head>
+   <body>
+        <div class="container">
+         <div class="card card-container">
+            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+            <img id="profile-img" src="images/toto1.jpeg" class="img-circle"/>
+            <p id="profile-name" class="profile-name-card"></p>
+            <form class="form-signin" action="/paylist/list" method="post">
+                <input type="text" name="userName" class="form-control" placeholder="Account" required autofocus>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <div id="remember" class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+            </form><!-- /form -->
+            <a href="#" class="forgot-password">
+                Forgot the password?
+            </a>
+        </div><!-- /card-container -->
+        </div>
+            <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+      <!-- 包括所有已编译的插件 -->
+   </body>
+</html>
