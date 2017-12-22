@@ -71,11 +71,11 @@ function removeRemark(data,config,callback){
     });
 }
 
-function find(content, config, callback) {
+function find(content, config,schema, callback) {
     var db = mongoose.createConnection(config.host);
-    var listMode = db.model(config.table, listSchema);
+    var listMode = db.model(config.table, schema);
     var sort={time:-1}
-    listMode.find(content,null,{sort:{time:-1}},function(err,result){
+    listMode.find(content,'-_id',{sort:{time:-1}},function(err,result){
         if(err){
             console.log(err);
         }else{
@@ -84,8 +84,10 @@ function find(content, config, callback) {
         db.close();
         });
 }
+
 function findSomeTable(content,schema,config,callback){
-    var db = mongoose.createConnection(config.host);
+    console.log('connection')
+    var db = mongoose.connect(config.host);
     var mode = db.model(config.table,schema);
     mode.findOne(content, function(err, result){
         if(err){
@@ -93,7 +95,7 @@ function findSomeTable(content,schema,config,callback){
         } else{
             callback(null,result);
         }
-        db.close();
+        db.disconnect();
     });
 }
 

@@ -1,5 +1,5 @@
 
-var host = "mongodb://localhost/pay"
+var host = "mongodb://@localhost/admin"
 
 function host(){
     return host;

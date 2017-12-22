@@ -29,13 +29,11 @@ var Redis = require('ioredis');
 
 router.all('*', function(req, res, next) {
     console.log("login:");
-    console.log(req.body);
     if(req.session.user){
         next();
     } else if(req.body.userName && req.body.password) {
         user=req.body.userName;
         passwd=req.body.password;
-        console.log(req.body);
         config.table = 'user';
         db.findSomeTable({name:user},userSchema,config, function(err, callback){
             if(err){
