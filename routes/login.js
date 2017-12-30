@@ -38,9 +38,7 @@ router.all('*', function(req, res, next) {
         db.findSomeTable({name:user},userSchema,config, function(err, callback){
             if(err){
                 console.log(err);
-            } else{
-                console.log(callback.passwd);
-                console.log(encrypt.md5(passwd));
+            } else if(callback!=null) {
                 if (encrypt.md5(passwd) == callback.passwd) {
                     req.session.user=user;
                     next();
