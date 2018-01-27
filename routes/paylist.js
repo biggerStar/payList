@@ -76,7 +76,7 @@ router.all('/list', function(req, res) {
         year = moment().format("YYYY");
     }
     var time = year + "-" + month;
-    var content = {money:{"$gt":0},time:{"$gte":time},userName:{"$in":user_list}};
+    var content = {money:{"$gt":0},time:{"$gte":time,"$lte":time+"-31"},userName:{"$in":user_list}};
     console.log(content);
  db.find(content,config,listSchema,function(err, callback){
                 if (err){
