@@ -5,13 +5,22 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!-- 引入 Bootstrap -->
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<script src="../javascripts/echarts.min.js"></script> 
+      <script src="../javascripts/echarts.min.js"></script> 
       <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
       <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
       <!--[if lt IE 9]>
          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
       <![endif]-->
+      <script>
+        function changeUser(obj){
+         var year=$("#select_year").val()
+         var mounth=$("#select_mounth").val()
+         var user_jing = $("#jing").prop('checked');
+         var user_dong = $("#dong").prop('checked');
+        window.location.href='/paylist/list?month='+mounth+'&year='+year+"&dong_selected="+user_dong+"&jing_selected="+user_jing;
+        }
+    </script>
    </head>
    <body>
         <div class="container">
@@ -20,6 +29,9 @@
              <nav class="navbar navbar-default navbar-inverse" role="navigation">
         <div class="navbar-header">
 					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="/">首页</a>
+                     <a class="navbar-brand" href="/paylist/list">看一眼</a>
+                     <a class="navbar-brand" href="/paylist/add">记一笔</a>
+
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -86,6 +98,11 @@
         <% }) %>
     </select>
     <label>月 </label>
+    
+        <div class="checkbox">
+            <label><input type="checkbox" id="dong" value="dong" <% if(selected_dong=="true"){ %> checked="checked"<% }%> onclick="changeUser(this)" />冬</label>
+              <label><input type="checkbox" id="jing" name="jing" value="jing" <% if(selected_jing=="true"){ %> checked="checked"<% }%> onclick="changeUser(this)"/>宝</label>
+         </div>
     <hr />
     <div class="tabbable" id="tabs-967670">
         <ul class="nav nav-tabs">
@@ -246,6 +263,8 @@ typeMapping.set("10","其他");
       <script src="https://code.jquery.com/jquery.js"></script>
       <!-- 包括所有已编译的插件 -->
       <script src="../javascripts/bootstrap.min.js"></script>
+       <link href="Content/bootstrap.min.css" rel="stylesheet" />
+  <script src="../javascripts/jquery.js"></script>
     <script>
     function selectOnchang(obj){  
  //获取被选中的option标签选项 
@@ -253,6 +272,15 @@ typeMapping.set("10","其他");
         var year=$("#select_year").val()
         window.location.href='/paylist/list?month='+mounth+'&year='+year
     }
+    function selectUser(obj){
+        var jing=$("#jing").val()
+        var dong=$("#dong").val()
+        
+        var mounth = obj.options[obj.selectedIndex].value;
+        var year=$("#select_year").val()
+        window.location.href='/paylist/list?month='+mounth+'&year='+year+"&dong_selected=true&jing_selected=true";
+    };
     </script>
+    
    </body>
 </html>

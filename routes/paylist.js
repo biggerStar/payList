@@ -38,33 +38,6 @@ router.post('/submit', function(req, res) {
 
 });
 
-router.all('/list', function(req, res) {
-    config.table = "list";
-    var month = req.query.month
-    var year = req.query.year;
-    var content={};
-    if (month == null || year == null) {
-        month = moment().format("MM");
-        year = moment().format("YYYY");
-    }
-    var search_time = year + "-" + month;
-    content = {money:{"$gt":0},time:new RegExp("^"+search_time)};
-    db.find(content,config,listSchema,function(err, callback){
-                if (err){
-                    console.log("select err" + err);
-                } else {
-                    db.find({money:{"$gt":0}},config,listSchema,function(err, callTime) {
-                        if(err) {
-                            console.log(err);
-                        } else {
-                            var time = getTime(callTime);
-                            console.log(JSON.stringify(JSON.stringify(callback)));
-                            res.render('paylist/list', {lists:callback,years:time.years,months:time.months,select_year:year,select_month:month,display:JSON.stringify(JSON.stringify(callback))});
-                        }
-                    });
-                }
-            });
-});
 
 function getTime(obj){
     var year = new Set();
@@ -77,25 +50,48 @@ function getTime(obj){
     return {years:year,months:month}
 
 }
-router.post('/list', function(req, res) {
+router.all('/list', function(req, res) {
     config.table = "list";
 
     var month = req.query.month
     var year = req.query.year;
+    var selected_dong = req.query.dong_selected;
+    var selected_jing = req.query.jing_selected;
+    let user_list = [];
+    console.log("req:");
+    console.log(req.query);
+    if(selected_dong == null && selected_jing == null) {
+        selected_dong = "true";
+        selected_jing = "true";
+    }
+    if (selected_dong == 'true') {
+        user_list.push("dong");
+    }
+    if (selected_jing == 'true') {
+        user_list.push("jing");
+    }
+    
     if (month == null || year == null) {
         month = moment().format("MM");
         year = moment().format("YYYY");
     }
     var time = year + "-" + month;
-    var content = {money:{"$gt":0},time:{"$gte":time}};
-    db.find(content, config,listSchema,function(err, callback){
+    var content = {money:{"$gt":0},time:{"$gte":time},userName:{"$in":user_list}};
+    console.log(content);
+ db.find(content,config,listSchema,function(err, callback){
                 if (err){
                     console.log("select err" + err);
                 } else {
-                    
-                     var time = getTime(callback);
-                     console.log(time);
-                    res.render('paylist/list', {lists:callback,years:time.years,months:time.months});
+                    console.log(callback);
+                    db.find({money:{"$gt":0}},config,listSchema,function(err, callTime) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            var time = getTime(callTime);
+                            console.log(JSON.stringify(JSON.stringify(callback)));
+                            res.render('paylist/list', {lists:callback,selected_dong:selected_dong,selected_jing:selected_jing, years:time.years,months:time.months,select_year:year,select_month:month,display:JSON.stringify(JSON.stringify(callback))});
+                        }
+                    });
                 }
             });
 });
