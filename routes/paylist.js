@@ -58,8 +58,6 @@ router.all('/list', function(req, res) {
     var selected_dong = req.query.dong_selected;
     var selected_jing = req.query.jing_selected;
     let user_list = [];
-    console.log("req:");
-    console.log(req.query);
     if(selected_dong == null && selected_jing == null) {
         selected_dong = "true";
         selected_jing = "true";
@@ -77,7 +75,6 @@ router.all('/list', function(req, res) {
     }
     var time = year + "-" + month;
     var content = {money:{"$gt":0},time:{"$gte":time,"$lte":time+"-31"},userName:{"$in":user_list}};
-    console.log(content);
  db.find(content,config,listSchema,function(err, callback){
                 if (err){
                     console.log("select err" + err);
@@ -88,7 +85,6 @@ router.all('/list', function(req, res) {
                             console.log(err);
                         } else {
                             var time = getTime(callTime);
-                            console.log(JSON.stringify(JSON.stringify(callback)));
                             res.render('paylist/list', {lists:callback,selected_dong:selected_dong,selected_jing:selected_jing, years:time.years,months:time.months,select_year:year,select_month:month,display:JSON.stringify(JSON.stringify(callback))});
                         }
                     });
