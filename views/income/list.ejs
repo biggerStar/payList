@@ -32,7 +32,7 @@
                     <a class="navbar-brand" href="/">首页</a>
                     <ul class="navbar-brand">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >支出<strong class="caret" ></strong></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">支出<strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/paylist/list">看一眼</a></li>
                                 <li><a href="/paylist/add">记一笔</a></li>
@@ -108,18 +108,11 @@
                             <%if(list.userName=='jing'){%><td>宝</td><%}%>
                             <%if(list.userName=='dong'){%><td>冬</td><%}%>
 						<td><%=list.money %></td>
-                        <%if(list.type==1){%><td>吃</td><%}%>
-                        <%if(list.type==2){%><td>衣</td><%}%>
-                        <%if(list.type==3){%><td>租房</td><%}%>
-                        <%if(list.type==4){%><td>旅游</td><%}%>
-                        <%if(list.type==5){%><td>电子产品</td><%}%>
-                        <%if(list.type==6){%><td>生活用品</td><%}%>
-                        <%if(list.type==7){%><td>护肤品</td><%}%>
-                        <%if(list.type==8){%><td>社交</td><%}%>
-                        <%if(list.type==9){%><td>家人</td><%}%>
-                        <%if(list.type==10){%><td>其他</td><%}%>
-
-                        <%if(list.type==11){%><td>交通</td><%}%>
+                        <%if(list.type==1){%><td>工资</td><%}%>
+                        <%if(list.type==2){%><td>报销</td><%}%>
+                        <%if(list.type==3){%><td>理财</td><%}%>
+                        <%if(list.type==4){%><td>礼物</td><%}%>
+                        <%if(list.type==5){%><td>其他</td><%}%>
 						<td>
                             <%=list.comment %>
 						</td>
@@ -188,18 +181,11 @@ function genData() {
     var lists = JSON.parse(<%-display%>);
    // var list = <%lists%>;
 var typeMapping = new Map();
-typeMapping.set("1","吃");
-typeMapping.set("2","衣");
-typeMapping.set("3","租房");
-typeMapping.set("4","旅游");
-typeMapping.set("5","电子产品");
-typeMapping.set("6","生活用品");
-typeMapping.set("7","护肤品");
-typeMapping.set("8","社交");
-typeMapping.set("9","家人");
-typeMapping.set("10","其他");
-
-    typeMapping.set("11","交通");
+typeMapping.set("1","工资");
+typeMapping.set("2","报销");
+typeMapping.set("3","理财");
+typeMapping.set("4","礼物");
+typeMapping.set("5","其他");
 
     var legendData = [];
     var seriesData = [];

@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var paylist = require('./routes/paylist');
+var income= require('./routes/income');
 var remark = require('./routes/remark');
 var app = express();
 var display = require('./routes/display');
@@ -40,6 +41,7 @@ app.use('*',login);
 app.use('/', index);
 app.use('/users', users);
 app.use('/paylist', paylist);
+app.use('/income', income);
 app.use('/remark', remark);
 app.use('/display', display);
 

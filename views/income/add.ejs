@@ -34,7 +34,6 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">收入<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
-
 								<li><a href="/income/list">看一眼</a></li>
 								<li><a href="/income/add">记一笔</a></li>
 							</ul>
@@ -52,7 +51,7 @@
 
         <div class="col-md-12 column">
 		
-            <form role="form" action="/paylist/submit" method="post">
+            <form role="form" action="/income/submit" method="post">
                 <div class="form-group">
 	            	<label for="userName">我是谁</label>
 	            	<select class="form-control" name="userName">
@@ -68,17 +67,11 @@
 					 <label for="">类型</label>
                      <!-- <input type="text" class="form-control" id="comment" />-->
                      <select class="form-control" name="type">
-                         <option value="1">吃</option>
-                         <option value="2">衣</option>
-                         <option value="3">房租</option>
-                         <option value="4">旅游</option>
-                         <option value="5">电子产品</option>
-                         <option value="6">生活用品</option>
-                         <option value="7">护肤品</option>
-                         <option value="8">礼物</option>
-                         <option value="9">家人</option>
-                         <option value="10">其他</option>
-						 <option value="10">交通</option>
+                         <option value="1">工资</option>
+                         <option value="2">报销</option>
+                         <option value="3">理财</option>
+                         <option value="4">礼物</option>
+                         <option value="5">其他</option>
 				    </select>
                 </div>
                 <div>
