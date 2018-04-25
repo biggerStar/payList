@@ -57,7 +57,7 @@ router.all('/list', function(req, res) {
     var year = req.query.year;
     var selected_dong = req.query.dong_selected;
     var selected_jing = req.query.jing_selected;
-    let user_list = [];
+    var user_list = [];
     if(selected_dong == null && selected_jing == null) {
         selected_dong = "true";
         selected_jing = "true";
