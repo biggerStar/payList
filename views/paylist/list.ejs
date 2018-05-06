@@ -1,7 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+
+
+        .box{
+            width: 50%;
+            margin: 50px auto;
+        }
+        .img-box{
+            width: 100%;
+            position:relative;
+            z-index:1;
+        }
+        .img-box img{
+            position:absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            width:100%;
+            margin:auto;
+            z-index: -1;
+            *zoom:1;
+        }
+        .img-box:before {
+            content: "";
+            display: inline-block;
+            padding-bottom: 100%;
+            width: 0.1px;   /*必须要有数值，否则无法把高度撑起来*/
+            vertical-align: middle;
+        }
+    </style>
     <title>Bootstrap 模板</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入 Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -31,15 +63,6 @@
         }
 
     </script>
-    .aligncenter {
-    clear: both;
-    display: block;
-    margin:auto;
-    }
-    .content{
-    display: inline-block;
-    vertical-align: middle;
-    }
 </head>
 <body>
 <div class="container">
@@ -189,12 +212,11 @@
                                         <%= list.time %>
                                     </td>
                                     <td>
-                                        <%= list.picture.split('/')[0] %>
                                         <a id="modal-869452" href="#<%= list._id %>" role="button" class="btn"
                                            data-toggle="modal">图片</a>
                                         <div class="modal fade" id="<%= list._id %>">
 
-                                            <img src='<%= list.picture %>' class='content' />
+                                            <img src='<%= list.picture %>' class='img-box' />
                                             <!--<img src= '<%= list.picture %>'>-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
