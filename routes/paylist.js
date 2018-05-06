@@ -11,17 +11,30 @@ var listSchema =new  mongoose.Schema({
     money: Number,
     time: String,
     type:String,
-    comment:String
+    comment:String,
+    picture: String
+
 });
 /* GET home page. */
 router.get('/add', function(req, res, next) {
     res.render('paylist/add',{name:'jing'});
 });
+router.get('/picture',function(req,res){
+    config.table = "lists";
+    console.log(req.query.id)
+    db.find({_id:mongoose.Types.ObjectId(req.query.id)},config,listSchema,function(err, callback) {
+        if (err) {
+            console.log("select err" + err);
+        } else {
+            res.json(callback[0].picture)
+        }
+    });
 
+});
 router.post('/submit', function(req, res) {
     var data = req.body
     data.time = moment().format("YYYY-MM-DD HH:mm:ss");
-    // console.log(req.body);
+    console.log(req.body);
     config.table = 'list';
     db.save(data,config,function(err,callback){
         if(err){
@@ -31,9 +44,7 @@ router.post('/submit', function(req, res) {
             res.render('paylist/ok');
         }
     });
-    //var list = pay.select({});
-    //console.dir("result:" + list);
-    //res.render('paylist/list', {lists:list});
+
 
 
 });
@@ -57,7 +68,7 @@ router.all('/list', function(req, res) {
     var year = req.query.year;
     var selected_dong = req.query.dong_selected;
     var selected_jing = req.query.jing_selected;
-    let user_list = [];
+    var user_list = [];
     if(selected_dong == null && selected_jing == null) {
         selected_dong = "true";
         selected_jing = "true";
@@ -75,16 +86,18 @@ router.all('/list', function(req, res) {
     }
     var time = year + "-" + month;
     var content = {money:{"$gt":0},time:{"$gte":time,"$lte":time+"-31"},userName:{"$in":user_list}};
- db.find(content,config,listSchema,function(err, callback){
+    db.find(content,config,listSchema,function(err, callback){
                 if (err){
                     console.log("select err" + err);
                 } else {
-                    console.log(callback);
+                    //console.log(callback);
                     db.find({money:{"$gt":0}},config,listSchema,function(err, callTime) {
                         if(err) {
                             console.log(err);
                         } else {
                             var time = getTime(callTime);
+                            console.log(callback)
+
                             res.render('paylist/list', {lists:callback,selected_dong:selected_dong,selected_jing:selected_jing, years:time.years,months:time.months,select_year:year,select_month:month,display:JSON.stringify(JSON.stringify(callback))});
                         }
                     });

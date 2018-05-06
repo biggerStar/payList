@@ -22,6 +22,7 @@ router.post('/submit', function(req,res){
         }
 });
 });
+
 router.get('/remove',function(req,res){
     var data = req.query;
     console.log(data);

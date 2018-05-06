@@ -7,14 +7,16 @@ var listSchema =new  mongoose.Schema({
     money: Number,
     time: String,
     type:String,
-    comment:String
+    comment:String,
+    picture: String
 });
 
 var remarkSchema =new  mongoose.Schema({
     userName: String,
     comment: String,
     type: String,
-    time:String
+    time:String,
+    picture: String
 });
 function save(data, config, callback){
     console.log("insert data");
@@ -23,7 +25,7 @@ function save(data, config, callback){
     // model or class
     var listModel = db.model(config.table, listSchema);
     // instance
-    var content = {comment:data.comment,userName:data.userName,money:data.money,type:data.type,time:data.time};
+    var content = {comment:data.comment,userName:data.userName,money:data.money,type:data.type,time:data.time,picture:data.picture};
     var insertData = new listModel(content);
     insertData.save(function(err,result){
         if(err){
@@ -43,7 +45,7 @@ function saveRemark(data, config, callback){
     // model or class
     var remarkModel = db.model(config.table, remarkSchema);
     // instance
-    var content = {comment:data.comment,userName:data.userName,type:data.type,time:data.time};
+    var content = {comment:data.comment,userName:data.userName,type:data.type,time:data.time,picture:data.picture};
     var insertData = new remarkModel(content);
     insertData.save(function(err,result){
         if(err){
@@ -75,7 +77,7 @@ function find(content, config,schema, callback) {
     var db = mongoose.createConnection(config.host);
     var listMode = db.model(config.table, schema);
     var sort={time:-1}
-    listMode.find(content,'-_id',{sort:{time:-1}},function(err,result){
+    listMode.find(content,'-__v',{sort:{time:-1}},function(err,result){
         if(err){
             console.log(err);
         }else{

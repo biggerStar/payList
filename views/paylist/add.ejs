@@ -85,6 +85,11 @@
                     <label for="">备注</label>
                     <input type="text" class="form-control" id="comment" name="comment"/>
                 </div>
+				<div class="form-group" id="image" >
+					<label for="">上传图片</label>
+					<input type="file"  onchange="preview(this)"
+						   multiple="multiple" accept="image/x-png, image/jpg, image/jpeg, image/gif" />
+				</div>
                 <button type="submit" class="btn btn-default">保存</button>
 			</form>
 		</div>
@@ -95,5 +100,57 @@
       <script src="https://code.jquery.com/jquery.js"></script>
       <!-- 包括所有已编译的插件 -->
       <script src="../javascripts/bootstrap.min.js"></script>
+		<script>
+            var msg = "您可以上传png, jpg, 或者gif格式的图片";
+            var filter = {
+                "jpeg": "/9j/4",
+                "gif": "R0lGOD",
+                "png": "iVBORw"
+            };
+            function preview(file) {
+                if (window.FileReader) {
+                    for (var index=0, f; f = file.files[index]; index++) {
+
+                        var filereader = new FileReader();
+                        filereader.onload = function (event) {
+                            var srcpath = event.target.result;
+                            if (!validateImg(srcpath)) {
+                                console.log("H5"+msg);
+                            } else {
+                                showPreviewImage(srcpath);
+                            }
+                        };
+                        filereader.readAsDataURL(f);
+                    }
+                } else {
+                    if (!/\.jpg$|\.png$|\.gif$/i.test(file.value)) {
+                        console.log("原生"+msg);
+                    } else {
+                        showPreviewImage(file.value);
+                    }
+                }
+            }
+
+            function validateImg(data) {
+                console.log(data);
+                var pos = data.indexOf(",") + 1;
+                for (var e in filter) {
+                    if (data.indexOf(filter[e]) === pos) {
+                        return e;
+                    }
+                }
+                return null;
+            }
+
+            function showPreviewImage(src) {
+                var img = document.createElement('input');
+                img.name='picture'
+				img.type= 'text'
+				img.value= src
+
+                document.getElementById('image').appendChild(img);
+            }
+
+		</script>
    </body>
 </html>

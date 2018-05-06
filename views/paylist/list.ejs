@@ -1,38 +1,60 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>Bootstrap 模板</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <!-- 引入 Bootstrap -->
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-      <script src="../javascripts/echarts.min.js"></script> 
-      <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
-      <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
-      <!--[if lt IE 9]>
-         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-      <![endif]-->
-      <script>
-        function changeUser(obj){
-         var year=$("#select_year").val()
-         var mounth=$("#select_mounth").val()
-         var user_jing = $("#jing").prop('checked');
-         var user_dong = $("#dong").prop('checked');
-        window.location.href='/paylist/list?month='+mounth+'&year='+year+"&dong_selected="+user_dong+"&jing_selected="+user_jing;
-        }
+<head>
+    <title>Bootstrap 模板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../javascripts/echarts.min.js"></script>
+    <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <script src="/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("picture").click(function () {
+                alert("dd");
+            });
+        });
     </script>
-   </head>
-   <body>
-        <div class="container">
-	<div class="row clearfix">
-		<div class="col-md-12 column">
+
+    <![endif]-->
+    <script>
+        function changeUser(obj) {
+            var year = $("#select_year").val()
+            var mounth = $("#select_mounth").val()
+            var user_jing = $("#jing").prop('checked');
+            var user_dong = $("#dong").prop('checked');
+            window.location.href = '/paylist/list?month=' + mounth + '&year=' + year + "&dong_selected=" + user_dong + "&jing_selected=" + user_jing;
+        }
+
+    </script>
+    .aligncenter {
+    clear: both;
+    display: block;
+    margin:auto;
+    }
+    .content{
+    display: inline-block;
+    vertical-align: middle;
+    }
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
             <nav class="navbar navbar-default navbar-inverse" role="navigation">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1"><span
+                                class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                                class="icon-bar"></span><span class="icon-bar"></span></button>
                     <a class="navbar-brand" href="/">首页</a>
                     <ul class="navbar-brand">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >支出<strong class="caret" ></strong></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">支出<strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/paylist/list">看一眼</a></li>
                                 <li><a href="/paylist/add">记一笔</a></li>
@@ -52,218 +74,280 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                    <li>
-                        <a href="/logout">退出</a>
-                    </li>
+                        <li>
+                            <a href="/logout">退出</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
-<div class="col-md-12 column">
-    <select id="select_year" class="selectpicker show-tick"  data-width="200px" data-live-search="true" id="select1">
-        <option value="<%=select_year %>" selected="selected"><%=select_year %></option>
-        <% years.forEach(function(year) {%>
-        <% if(year!=select_year){%>
-        <option value="<%=year %>"><%=year %></option>
-        <%}%>
-        <% }) %>
-    </select>
-    <label> 年 </label>
-    <select  id="select_mounth" class="selectpicker show-tick"  data-width="100px" data-live-search="true" id="select1" onchange="selectOnchang(this)">
-        <option value="<%=select_month %>" selected="selected"><%=select_month %></option>
-        <% months.forEach(function(month) {%>
-        <% if(month!=select_month){%>
-        <option value="<%=month %>"><%=month %></option>
-        <%}%>
-        <% }) %>
-    </select>
-    <label>月 </label>
-    
-        <div class="checkbox">
-            <label><input type="checkbox" id="dong" value="dong" <% if(selected_dong=="true"){ %> checked="checked"<% }%> onclick="changeUser(this)" />冬</label>
-              <label><input type="checkbox" id="jing" name="jing" value="jing" <% if(selected_jing=="true"){ %> checked="checked"<% }%> onclick="changeUser(this)"/>宝</label>
-         </div>
-    <hr />
-    <div class="tabbable" id="tabs-967670">
-        <ul class="nav nav-tabs">
-            <li class="active">
-                <a href="#detail" data-toggle="tab">精确数据</a>
-            </li>
-            <li>
-                <a href="#display" data-toggle="tab">画个图看看</a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="detail">
-	        	<table class="table">
-				    <thead><tr>
-						    <th>成员</th>
-						    <th>花销</th>
-						    <th>类型</th>
-						    <th>备注</th>
-                            <th>时间</th>
-					</tr></thead>
-				<tbody>
-                    <% lists.forEach(function(list) {%>
-					<tr>
-                            <%if(list.userName=='jing'){%><td>宝</td><%}%>
-                            <%if(list.userName=='dong'){%><td>冬</td><%}%>
-						<td><%=list.money %></td>
-                        <%if(list.type==1){%><td>吃</td><%}%>
-                        <%if(list.type==2){%><td>衣</td><%}%>
-                        <%if(list.type==3){%><td>租房</td><%}%>
-                        <%if(list.type==4){%><td>旅游</td><%}%>
-                        <%if(list.type==5){%><td>电子产品</td><%}%>
-                        <%if(list.type==6){%><td>生活用品</td><%}%>
-                        <%if(list.type==7){%><td>护肤品</td><%}%>
-                        <%if(list.type==8){%><td>社交</td><%}%>
-                        <%if(list.type==9){%><td>家人</td><%}%>
-                        <%if(list.type==10){%><td>其他</td><%}%>
-
-                        <%if(list.type==11){%><td>交通</td><%}%>
-						<td>
-                            <%=list.comment %>
-						</td>
-                        <td>
-                            <%=list.time %>
-                        </td>
-					</tr>
+            <div class="col-md-12 column">
+                <select id="select_year" class="selectpicker show-tick" data-width="200px" data-live-search="true"
+                        id="select1">
+                    <option value="<%= select_year %>" selected="selected"><%= select_year %></option>
+                    <% years.forEach(function(year) { %>
+                    <% if(year != select_year){ %>
+                    <option value="<%= year %>"><%= year %></option>
+                    <% } %>
                     <% }) %>
-				</tbody>
-			</table>
+                </select>
+                <label> 年 </label>
+                <select id="select_mounth" class="selectpicker show-tick" data-width="100px" data-live-search="true"
+                        id="select1" onchange="selectOnchang(this)">
+                    <option value="<%= select_month %>" selected="selected"><%= select_month %></option>
+                    <% months.forEach(function(month) { %>
+                    <% if(month != select_month){ %>
+                    <option value="<%= month %>"><%= month %></option>
+                    <% } %>
+                    <% }) %>
+                </select>
+                <label>月 </label>
+
+                <div class="checkbox">
+                    <label><input type="checkbox" id="dong" value="dong"
+                                <% if(selected_dong == "true"){ %>
+                                  checked="checked"
+                                <% } %>
+                                  onclick="changeUser(this)"/>冬</label>
+                    <label><input type="checkbox" id="jing" name="jing" value="jing"
+                                <% if(selected_jing == "true"){ %>
+                                  checked="checked"
+                                <% } %>
+                                  onclick="changeUser(this)"/>宝</label>
+                </div>
+                <hr/>
+                <div class="tabbable" id="tabs-967670">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#detail" data-toggle="tab">精确数据</a>
+                        </li>
+                        <li>
+                            <a href="#display" data-toggle="tab">画个图看看</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="detail">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>成员</th>
+                                    <th>花销</th>
+                                    <th>类型</th>
+                                    <th>备注</th>
+                                    <th>时间</th>
+                                    <th>图片</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% lists.forEach(function(list) { %>
+                                <tr>
+                                    <% if(list.userName == 'jing'){ %>
+                                    <td>宝</td>
+                                    <% } %>
+                                    <% if(list.userName == 'dong'){ %>
+                                    <td>冬</td>
+                                    <% } %>
+                                    <td><%= list.money %></td>
+                                    <% if(list.type == 1){ %>
+                                    <td>吃</td>
+                                    <% } %>
+                                    <% if(list.type == 2){ %>
+                                    <td>衣</td>
+                                    <% } %>
+                                    <% if(list.type == 3){ %>
+                                    <td>租房</td>
+                                    <% } %>
+                                    <% if(list.type == 4){ %>
+                                    <td>旅游</td>
+                                    <% } %>
+                                    <% if(list.type == 5){ %>
+                                    <td>电子产品</td>
+                                    <% } %>
+                                    <% if(list.type == 6){ %>
+                                    <td>生活用品</td>
+                                    <% } %>
+                                    <% if(list.type == 7){ %>
+                                    <td>护肤品</td>
+                                    <% } %>
+                                    <% if(list.type == 8){ %>
+                                    <td>社交</td>
+                                    <% } %>
+                                    <% if(list.type == 9){ %>
+                                    <td>家人</td>
+                                    <% } %>
+                                    <% if(list.type == 10){ %>
+                                    <td>其他</td>
+                                    <% } %>
+
+                                    <% if(list.type == 11){ %>
+                                    <td>交通</td>
+                                    <% } %>
+                                    <td>
+                                        <%= list.comment %>
+                                    </td>
+                                    <td>
+                                        <%= list.time %>
+                                    </td>
+                                    <td>
+                                        <%= list.picture.split('/')[0] %>
+                                        <a id="modal-869452" href="#<%= list._id %>" role="button" class="btn"
+                                           data-toggle="modal">图片</a>
+                                        <div class="modal fade" id="<%= list._id %>">
+
+                                            <img src='<%= list.picture %>' class='content' />
+                                            <!--<img src= '<%= list.picture %>'>-->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    关闭
+                                                </button>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+
+                                    <!--<td><button type="picture" class="btn-info">图片</button></td>-->
+                                </tr>
+                                <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="display" data-toggle="tab">
+                            <div id="main" style="width:300px;height:600px;">
+
+                                <script type="text/javascript">
+                                    // 基于准备好的dom，初始化echarts实例
+                                    var myChart = echarts.init(document.getElementById('main'));
+                                    var data = genData();
+
+
+                                    option = {
+                                        title: {
+                                            text: 'Total:RMB ' + data.total,
+                                            subtext: '',
+                                            x: 'left'
+                                        },
+                                        tooltip: {
+                                            trigger: 'item',
+                                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                        },
+                                        legend: {
+                                            type: 'scroll',
+                                            orient: 'vertical',
+                                            right: 10,
+                                            top: 20,
+                                            bottom: 20,
+                                            data: data.legendData,
+                                            x: 'right'
+                                        },
+                                        series: [
+                                            {
+                                                name: '花费',
+                                                type: 'pie',
+                                                radius: '60%',
+                                                center: ['55%', '60%'],
+                                                data: data.seriesData,
+                                                itemStyle: {
+                                                    emphasis: {
+                                                        shadowBlur: 10,
+                                                        shadowOffsetX: 0,
+                                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    };
+
+
+                                    function decode(text) {
+                                        var temp = document.createElement("div");
+                                        temp.innerHTML = text;
+                                        var output = temp.innerText || temp.textContent;
+                                        temp = null;
+                                        return output;
+                                    }
+
+                                    function genData() {
+                                        var lists = JSON.parse(<%- display %>);
+                                        // var list = <% lists %>;
+                                        var typeMapping = new Map();
+                                        typeMapping.set("1", "吃");
+                                        typeMapping.set("2", "衣");
+                                        typeMapping.set("3", "租房");
+                                        typeMapping.set("4", "旅游");
+                                        typeMapping.set("5", "电子产品");
+                                        typeMapping.set("6", "生活用品");
+                                        typeMapping.set("7", "护肤品");
+                                        typeMapping.set("8", "社交");
+                                        typeMapping.set("9", "家人");
+                                        typeMapping.set("10", "其他");
+
+                                        typeMapping.set("11", "交通");
+
+                                        var legendData = [];
+                                        var seriesData = [];
+
+                                        var map = new Map();
+                                        // for (var i = 0; i <list.length ; i++) {
+                                        lists.forEach(function (list) {
+                                            //var obj = list;
+                                            var type = list.type;
+                                            var key = typeMapping.get(type);
+                                            var value = list.money;
+                                            if (map.has(key)) {
+                                                value = map.get(key) + value;
+                                                map.set(key, value);
+                                            } else {
+                                                map.set(key, value);
+                                            }
+                                        });
+                                        var total = 0;
+                                        map.forEach(function (v, key, this_map) {
+                                            legendData.push(key);
+                                            seriesData.push({name: key, value: v});
+                                            total += v;
+
+                                        });
+                                        return {
+                                            legendData: legendData,
+                                            seriesData: seriesData,
+                                            total: total.toString()
+                                        };
+                                    }
+
+
+                                    myChart.setOption(option);
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="tab-pane" id="display" data-toggle="tab">
-        <div id="main" style="width:300px;height:600px;">
-            <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
-        var data = genData();
-
-option = {
-    title : {
-        text: 'Total:RMB '+data.total,
-        subtext:'',
-        x:'left'
-    },
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-    legend: {
-        type: 'scroll',
-        orient: 'vertical',
-        right: 10,
-        top: 20,
-        bottom: 20,
-        data: data.legendData,
-        x:'right'
-    },
-    series : [
-        {
-            name: '花费',
-            type: 'pie',
-            radius : '60%',
-            center: ['55%', '60%'],
-            data: data.seriesData,
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-        }
-    ]
-};
-
-
-function decode(text)
-{ 
-    var temp = document.createElement("div"); 
-    temp.innerHTML = text; 
-    var output = temp.innerText || temp.textContent; 
-    temp = null; 
-    return output; 
-} 
-function genData() {
-    var lists = JSON.parse(<%-display%>);
-   // var list = <%lists%>;
-var typeMapping = new Map();
-typeMapping.set("1","吃");
-typeMapping.set("2","衣");
-typeMapping.set("3","租房");
-typeMapping.set("4","旅游");
-typeMapping.set("5","电子产品");
-typeMapping.set("6","生活用品");
-typeMapping.set("7","护肤品");
-typeMapping.set("8","社交");
-typeMapping.set("9","家人");
-typeMapping.set("10","其他");
-
-    typeMapping.set("11","交通");
-
-    var legendData = [];
-    var seriesData = [];
-    
-    var map = new Map();
-   // for (var i = 0; i <list.length ; i++) {
-    lists.forEach(function(list){
-        //var obj = list;
-        var type = list.type;
-        var key = typeMapping.get(type);
-        var value = list.money;
-        if(map.has(key)) {
-            value = map.get(key) + value;
-            map.set(key, value);
-        } else {
-            map.set(key, value);
-        }
-    });
-    var total=0;
-    map.forEach(function(v,key,this_map){
-        legendData.push(key);
-        seriesData.push({name:key,value:v});
-        total += v;
-     
-    });
-       return {
-        legendData: legendData,
-        seriesData: seriesData,
-           total:total.toString()
-    };
-}
-
-
-        myChart.setOption(option);
-    </script>
-        </div> 
-        </div>
-        </div>
-		</div>
-        </div>
-        </div>
-        </div>
-            <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
-      <script src="https://code.jquery.com/jquery.js"></script>
-      <!-- 包括所有已编译的插件 -->
-      <script src="../javascripts/bootstrap.min.js"></script>
-       <link href="Content/bootstrap.min.css" rel="stylesheet" />
-  <script src="../javascripts/jquery.js"></script>
+    </div>
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- 包括所有已编译的插件 -->
+    <script src="../javascripts/bootstrap.min.js"></script>
+    <!--<link href="Content/bootstrap.min.css" rel="stylesheet" />-->
+    <script src="../javascripts/jquery.js"></script>
     <script>
-    function selectOnchang(obj){  
- //获取被选中的option标签选项 
-        var mounth = obj.options[obj.selectedIndex].value;
-        var year=$("#select_year").val()
-        window.location.href='/paylist/list?month='+mounth+'&year='+year
-    }
-    function selectUser(obj){
-        var jing=$("#jing").val()
-        var dong=$("#dong").val()
-        
-        var mounth = obj.options[obj.selectedIndex].value;
-        var year=$("#select_year").val()
-        window.location.href='/paylist/list?month='+mounth+'&year='+year+"&dong_selected=true&jing_selected=true";
-    };
+        function selectOnchang(obj) {
+            //获取被选中的option标签选项
+            var mounth = obj.options[obj.selectedIndex].value;
+            var year = $("#select_year").val()
+            window.location.href = '/paylist/list?month=' + mounth + '&year=' + year
+        }
+
+        function selectUser(obj) {
+            var jing = $("#jing").val()
+            var dong = $("#dong").val()
+
+            var mounth = obj.options[obj.selectedIndex].value;
+            var year = $("#select_year").val()
+            window.location.href = '/paylist/list?month=' + mounth + '&year=' + year + "&dong_selected=true&jing_selected=true";
+        };
     </script>
-    
-   </body>
+
+</body>
 </html>
