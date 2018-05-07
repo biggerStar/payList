@@ -157,7 +157,6 @@
                                     <th>类型</th>
                                     <th>备注</th>
                                     <th>时间</th>
-                                    <th>图片</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -206,14 +205,10 @@
                                     <td>交通</td>
                                     <% } %>
                                     <td>
-                                        <%= list.comment %>
-                                    </td>
-                                    <td>
-                                        <%= list.time.split(' ')[0] %>
-                                    </td>
-                                    <td>
+
                                         <a id="modal-869452" href="#<%= list._id %>" role="button" class="btn"
-                                           data-toggle="modal">图片</a>
+                                           data-toggle="modal"> <%= list.comment %></a>
+
                                         <div class="modal fade" id="<%= list._id %>">
 
                                             <img src='<%= list.picture %>' class='img-box' />
@@ -224,9 +219,11 @@
                                                 </button>
                                             </div>
                                         </div>
-
-
                                     </td>
+                                    <td>
+                                        <%= list.time.split(' ')[0] %>
+                                    </td>
+
 
                                     <!--<td><button type="picture" class="btn-info">图片</button></td>-->
                                 </tr>
