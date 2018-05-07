@@ -19,7 +19,7 @@
             bottom:0;
             left:0;
             right:0;
-            width:100%;
+            width:50%;
             margin:auto;
             z-index: -1;
             *zoom:1;
@@ -27,7 +27,7 @@
         .img-box:before {
             content: "";
             display: inline-block;
-            padding-bottom: 100%;
+            padding-bottom: 50%;
             width: 0.1px;   /*必须要有数值，否则无法把高度撑起来*/
             vertical-align: middle;
         }
@@ -210,9 +210,10 @@
                                            data-toggle="modal"> <%= list.comment %></a>
 
                                         <div class="modal fade" id="<%= list._id %>">
+                                            <div>
 
                                             <img src='<%= list.picture %>' class='img-box' />
-                                            <!--<img src= '<%= list.picture %>'>-->
+                                            </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                                     关闭

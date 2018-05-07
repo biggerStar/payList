@@ -21,7 +21,6 @@ router.get('/add', function(req, res, next) {
 });
 router.get('/picture',function(req,res){
     config.table = "lists";
-    console.log(req.query.id)
     db.find({_id:mongoose.Types.ObjectId(req.query.id)},config,listSchema,function(err, callback) {
         if (err) {
             console.log("select err" + err);
@@ -34,7 +33,6 @@ router.get('/picture',function(req,res){
 router.post('/submit', function(req, res) {
     var data = req.body
     data.time = moment().format("YYYY-MM-DD HH:mm:ss");
-    console.log(req.body);
     config.table = 'list';
     db.save(data,config,function(err,callback){
         if(err){

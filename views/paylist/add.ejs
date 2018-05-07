@@ -88,7 +88,8 @@
 				<div class="form-group" id="image" >
 					<label for="">上传图片</label>
 					<input type="file"  onchange="preview(this)"
-						   multiple="multiple" accept="image/x-png, image/jpg, image/jpeg, image/gif" />
+						   />
+					<!--multiple="multiple" accept="image/x-png, image/jpg, image/jpeg, image/gif"-->
 				</div>
                 <button type="submit" class="btn btn-default">保存</button>
 			</form>
@@ -139,7 +140,7 @@
                         return e;
                     }
                 }
-                return null;
+                return true;
             }
 
             function showPreviewImage(src) {
