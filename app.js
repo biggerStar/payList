@@ -10,9 +10,9 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var paylist = require('./routes/paylist');
 var income= require('./routes/income');
+var balance = require('./routes/balance');
 var remark = require('./routes/remark');
 var app = express();
-var display = require('./routes/display');
 var login = require('./routes/login');
 
 // view engine setup
@@ -45,16 +45,16 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/paylist', paylist);
 app.use('/income', income);
+app.use('/balance', balance);
 app.use('/remark', remark);
-// app.use('/display', display);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
+*/
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

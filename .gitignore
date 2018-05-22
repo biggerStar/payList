@@ -63,3 +63,5 @@ conf/session.conf
 conf/config.js
 conf/session.conf
 package-lock.json
+package-lock.json
+conf/config.js

@@ -11,40 +11,26 @@ var listSchema =new  mongoose.Schema({
     money: Number,
     time: String,
     type:String,
-    comment:String,
-    picture: String
-
+    comment:String
 });
 /* GET home page. */
 router.get('/add', function(req, res, next) {
-    res.render('paylist/add',{name:'jing'});
+    res.render('income/add',{name:'jing'});
 });
-router.get('/picture',function(req,res){
-    config.table = "lists";
-    db.find({_id:mongoose.Types.ObjectId(req.query.id)},config,listSchema,function(err, callback) {
-        if (err) {
-            console.log("select err" + err);
-        } else {
-            res.json(callback[0].picture)
-        }
-    });
 
-});
 router.post('/submit', function(req, res) {
     var data = req.body
     data.time = moment().format("YYYY-MM-DD HH:mm:ss");
-    config.table = 'list';
+    // console.log(req.body);
+    config.table = 'income';
     db.save(data,config,function(err,callback){
         if(err){
             console.log("err" + err);
         } else {
             console.log("insert success");
-            res.render('paylist/ok');
+            res.render('income/ok');
         }
     });
-
-
-
 });
 
 
@@ -60,8 +46,7 @@ function getTime(obj){
 
 }
 router.all('/list', function(req, res) {
-    config.table = "list";
-
+    config.table = "income";
     var month = req.query.month
     var year = req.query.year;
     var selected_dong = req.query.dong_selected;
@@ -78,23 +63,30 @@ router.all('/list', function(req, res) {
         user_list.push("jing");
     }
     
-    if (month == null || year == null) {
+    if ( year == null) {
         month = moment().format("MM");
         year = moment().format("YYYY");
     }
-    var time = year + "-" + month;
-    var content = {money:{"$gt":0},time:{"$gte":time,"$lte":time+"-31"},userName:{"$in":user_list}};
+        var time = year;
+
+    var content = {money:{"$gt":0},time:{"$gte":time, "$lte":time + "1"},userName:{"$in":user_list}};
+    if (year == "all") {
+        content = {money:{"$gt":0},userName:{"$in":user_list}};
+        year='全部'
+        
+    }
     db.find(content,config,listSchema,function(err, callback){
                 if (err){
                     console.log("select err" + err);
                 } else {
-                    //console.log(callback);
-                    db.find({money:{"$gt":0}},config,listSchema,function(err, callTime) {
+                    console.log(callback);
+                    config.table = 'list';
+                    db.find(content, config, listSchema, function(err, callTime) {
                         if(err) {
                             console.log(err);
                         } else {
                             var time = getTime(callTime);
-                            res.render('paylist/list', {lists:callback,selected_dong:selected_dong,selected_jing:selected_jing, years:time.years,months:time.months,select_year:year,select_month:month,display:JSON.stringify(JSON.stringify(callback))});
+                            res.render('balance/list', {select_year: year, income:callback,pay: callTime, selected_dong:selected_dong,selected_jing:selected_jing, years:["2017","2018"],display_income:JSON.stringify(JSON.stringify(callback)),display_paylist:JSON.stringify(JSON.stringify(callTime))});
                         }
                     });
                 }

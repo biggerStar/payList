@@ -2,8 +2,6 @@
 <html>
 <head>
     <style>
-
-
         .box{
             width: 50%;
             margin: 50px auto;
@@ -94,6 +92,11 @@
                         </li>
                     </ul>
 
+                    <ul class="navbar-brand">
+                        <li class="dropdown">
+                            <a href="/balance/list" class="dropdown-toggle" data-toggle="">统计<strong class="caret"></strong></a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
@@ -205,6 +208,12 @@
                                     <td>交通</td>
                                     <% } %>
                                     <td>
+                                    <% if(list.type == 12){ %>
+                                    <td>娱乐</td>
+                                    <% } %>
+                                    <% if(list.type == 13){ %>
+                                    <td>学习</td>
+                                    <% } %>
 
                                         <a id="modal-869452" href="#<%= list._id %>" role="button" class="btn"
                                            data-toggle="modal"> <%= list.comment %></a>
@@ -301,8 +310,9 @@
                                         typeMapping.set("8", "社交");
                                         typeMapping.set("9", "家人");
                                         typeMapping.set("10", "其他");
-
                                         typeMapping.set("11", "交通");
+                                        typeMapping.set("12", "娱乐");
+                                        typeMapping.set("13", "学习");
 
                                         var legendData = [];
                                         var seriesData = [];

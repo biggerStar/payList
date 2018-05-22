@@ -15,10 +15,9 @@
       <script>
         function changeUser(obj){
          var year=$("#select_year").val()
-         var mounth=$("#select_mounth").val()
          var user_jing = $("#jing").prop('checked');
          var user_dong = $("#dong").prop('checked');
-        window.location.href='/paylist/list?month='+mounth+'&year='+year+"&dong_selected="+user_dong+"&jing_selected="+user_jing;
+        window.location.href='/balance/list?&year='+year+"&dong_selected="+user_dong+"&jing_selected="+user_jing;
         }
     </script>
    </head>
@@ -48,12 +47,12 @@
                             </ul>
                         </li>
                     </ul>
-
                     <ul class="navbar-brand">
                         <li class="dropdown">
                             <a href="/balance/list" class="dropdown-toggle" data-toggle="">统计<strong class="caret"></strong></a>
                         </li>
                     </ul>
+
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
@@ -64,25 +63,16 @@
                 </div>
             </nav>
 <div class="col-md-12 column">
-    <select id="select_year" class="selectpicker show-tick"  data-width="200px" data-live-search="true" id="select1">
+    <select id="select_year" class="selectpicker show-tick"  data-width="200px" data-live-search="true" id="select1" onchange="selectOnchang(this)">
         <option value="<%=select_year %>" selected="selected"><%=select_year %></option>
         <% years.forEach(function(year) {%>
         <% if(year!=select_year){%>
         <option value="<%=year %>"><%=year %></option>
         <%}%>
         <% }) %>
+        <option value="all">全部</option>
     </select>
     <label> 年 </label>
-    <select  id="select_mounth" class="selectpicker show-tick"  data-width="100px" data-live-search="true" id="select1" onchange="selectOnchang(this)">
-        <option value="<%=select_month %>" selected="selected"><%=select_month %></option>
-        <% months.forEach(function(month) {%>
-        <% if(month!=select_month){%>
-        <option value="<%=month %>"><%=month %></option>
-        <%}%>
-        <% }) %>
-    </select>
-    <label>月 </label>
-    
         <div class="checkbox">
             <label><input type="checkbox" id="dong" value="dong" <% if(selected_dong=="true"){ %> checked="checked"<% }%> onclick="changeUser(this)" />冬</label>
               <label><input type="checkbox" id="jing" name="jing" value="jing" <% if(selected_jing=="true"){ %> checked="checked"<% }%> onclick="changeUser(this)"/>宝</label>
@@ -108,7 +98,7 @@
                             <th>时间</th>
 					</tr></thead>
 				<tbody>
-                    <% lists.forEach(function(list) {%>
+                    <% income.forEach(function(list) {%>
 					<tr>
                             <%if(list.userName=='jing'){%><td>宝</td><%}%>
                             <%if(list.userName=='dong'){%><td>冬</td><%}%>
@@ -131,47 +121,57 @@
         </div>
         <div class="tab-pane" id="display" data-toggle="tab">
         <div id="main" style="width:300px;height:600px;">
-            <script type="text/javascript">
+<script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
-        var data = genData();
+var myChart = echarts.init(document.getElementById('main'));
+var data = genData();
 
 option = {
     title : {
-        text: 'Total:RMB '+data.total,
+        text: '收入:RMB '+data.income_total + '  \n支出:RMB' + data.pay_total,
         subtext:'',
         x:'left'
     },
     tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
+        trigger: 'axis'
     },
     legend: {
-        type: 'scroll',
-        orient: 'vertical',
-        right: 10,
-        top: 20,
-        bottom: 20,
-        data: data.legendData,
-        x:'right'
+        x:'right',
+        data:['收入','支出'] 
     },
-    series : [
-        {
-            name: '花费',
-            type: 'pie',
-            radius : '60%',
-            center: ['55%', '60%'],
-            data: data.seriesData,
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
+    toolbox: {
+        feature: {
+            saveAsImage: {}
         }
-    ]
-};
+    },
+    /*grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },*/
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: data.mounth
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'收入',
+            type:'line',
+            stack: '总量',
+            data: data.income_list
+        },
+        {
+            name:'支出',
+            type:'line',
+            stack: '总量',
+            data: data.paylist_list
+        }] 
+        };
 
 
 function decode(text)
@@ -183,49 +183,55 @@ function decode(text)
     return output; 
 } 
 function genData() {
-    var lists = JSON.parse(<%-display%>);
-   // var list = <%lists%>;
-var typeMapping = new Map();
-typeMapping.set("1","工资");
-typeMapping.set("2","报销");
-typeMapping.set("3","理财");
-typeMapping.set("4","礼物");
-typeMapping.set("5","其他");
-
-    var legendData = [];
-    var seriesData = [];
+    var income= JSON.parse(<%-display_income%>);
+    var paylist= JSON.parse(<%-display_paylist%>);
+    var mounth_list= [];
+    var income_list= [];
+    var pay_list= [];
     
-    var map = new Map();
-   // for (var i = 0; i <list.length ; i++) {
-    lists.forEach(function(list){
-        //var obj = list;
-        var type = list.type;
-        var key = typeMapping.get(type);
-        var value = list.money;
-        if(map.has(key)) {
-            value = map.get(key) + value;
-            map.set(key, value);
+    var income_map = new Map();
+    income.map(x => {x.time = x.time.substring(0, x.time.lastIndexOf("-"));return x}).forEach(list =>{
+        var time = list.time
+        if(income_map.has(time)) {
+            var value = income_map.get(time) + list.money;
+            income_map.set(time, value);
         } else {
-            map.set(key, value);
+            income_map.set(time, list.money);
         }
     });
-    var total=0;
-    map.forEach(function(v,key,this_map){
-        legendData.push(key);
-        seriesData.push({name:key,value:v});
-        total += v;
-     
+    var pay_map = new Map()
+    paylist.map(x => {x.time = x.time.substring(0, x.time.lastIndexOf("-"));return x}).forEach(function(list){
+        var time = list.time
+        if(pay_map.has(time)) {
+            var value = pay_map.get(time) + list.money;
+            pay_map.set(time, value);
+        } else {
+            pay_map.set(time, list.money);
+        }
+    });
+
+    var income_total=0;
+    income_map.forEach(function(v,key,this_map){
+        income_list.push(v);
+        income_total += v;
+    });
+
+    var pay_total=0;
+    pay_map.forEach(function(v,key,this_map){
+        mounth_list.push(key);
+        pay_list.push(v);
+        pay_total += v;
     });
        return {
-        legendData: legendData,
-        seriesData: seriesData,
-           total:total.toString()
+        mounth: mounth_list,
+        paylist_list: pay_list,
+        income_list: income_list,
+        income_total:income_total.toString(),
+        pay_total:pay_total.toString()
     };
 }
-
-
-        myChart.setOption(option);
-    </script>
+myChart.setOption(option);
+</script>
         </div> 
         </div>
         </div>
@@ -237,24 +243,21 @@ typeMapping.set("5","其他");
       <script src="https://code.jquery.com/jquery.js"></script>
       <!-- 包括所有已编译的插件 -->
       <script src="../javascripts/bootstrap.min.js"></script>
-       <link href="Content/bootstrap.min.css" rel="stylesheet" />
   <script src="../javascripts/jquery.js"></script>
     <script>
     function selectOnchang(obj){  
- //获取被选中的option标签选项 
-        var mounth = obj.options[obj.selectedIndex].value;
+     //获取被选中的option标签选项 
         var year=$("#select_year").val()
-        window.location.href='/income/list?month='+mounth+'&year='+year
+        window.location.href='/balance/list?&year='+year
     }
+
     function selectUser(obj){
         var jing=$("#jing").val()
         var dong=$("#dong").val()
-        
         var mounth = obj.options[obj.selectedIndex].value;
         var year=$("#select_year").val()
-        window.location.href='/paylist/list?month='+mounth+'&year='+year+"&dong_selected=true&jing_selected=true";
+        window.location.href='/balance/list?&year='+year+"&dong_selected=true&jing_selected=true";
     };
     </script>
-    
    </body>
 </html>

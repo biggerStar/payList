@@ -1,5 +1,5 @@
 
-var host = "mongodb://@localhost/admin"
+var host = "mongodb://sdd:sfx@localhost/admin"
 
 function host(){
     return host;
