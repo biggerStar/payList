@@ -79,48 +79,9 @@
          </div>
     <hr />
     <div class="tabbable" id="tabs-967670">
-        <ul class="nav nav-tabs">
-            <li class="active">
-                <a href="#detail" data-toggle="tab">精确数据</a>
-            </li>
-            <li>
-                <a href="#display" data-toggle="tab">画个图看看</a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="detail">
-	        	<table class="table">
-				    <thead><tr>
-						    <th>成员</th>
-						    <th>花销</th>
-						    <th>类型</th>
-						    <th>备注</th>
-                            <th>时间</th>
-					</tr></thead>
-				<tbody>
-                    <% income.forEach(function(list) {%>
-					<tr>
-                            <%if(list.userName=='jing'){%><td>宝</td><%}%>
-                            <%if(list.userName=='dong'){%><td>冬</td><%}%>
-						<td><%=list.money %></td>
-                        <%if(list.type==1){%><td>工资</td><%}%>
-                        <%if(list.type==2){%><td>报销</td><%}%>
-                        <%if(list.type==3){%><td>理财</td><%}%>
-                        <%if(list.type==4){%><td>礼物</td><%}%>
-                        <%if(list.type==5){%><td>其他</td><%}%>
-						<td>
-                            <%=list.comment %>
-						</td>
-                        <td>
-                            <%=list.time %>
-                        </td>
-					</tr>
-                    <% }) %>
-				</tbody>
-			</table>
         </div>
         <div class="tab-pane" id="display" data-toggle="tab">
-        <div id="main" style="width:300px;height:600px;">
+        <div id="main" style="width:500px;height:600px;">
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
 var myChart = echarts.init(document.getElementById('main'));
@@ -144,12 +105,12 @@ option = {
             saveAsImage: {}
         }
     },
-    /*grid: {
+    grid: {
         left: '3%',
         right: '4%',
         bottom: '3%',
         containLabel: true
-    },*/
+    },
     xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -209,7 +170,7 @@ function genData() {
             pay_map.set(time, list.money);
         }
     });
-
+    
     var income_total=0;
     income_map.forEach(function(v,key,this_map){
         income_list.push(v);
