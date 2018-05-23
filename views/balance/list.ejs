@@ -87,23 +87,23 @@
 var myChart = echarts.init(document.getElementById('main'));
 var data = genData();
 
+var colors = ['#5793f3', '#d14a61', '#675bba'];
 option = {
+    color: colors,
+    tooltip: {
+        trigger: 'none',
+        axisPointer: {
+            type: 'cross'
+        }
+    },
     title : {
-        text: '收入:RMB '+data.income_total + '  \n支出:RMB' + data.pay_total,
+        text: '收入:'+data.income_total + '  \n支出:' + data.pay_total,
         subtext:'',
         x:'left'
-    },
-    tooltip : {
-        trigger: 'axis'
     },
     legend: {
         x:'right',
         data:['收入','支出'] 
-    },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
     },
     grid: {
         left: '3%',
@@ -111,29 +111,68 @@ option = {
         bottom: '3%',
         containLabel: true
     },
-    xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: data.mounth
-    },
-    yAxis: {
-        type: 'value'
-    },
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine: {
+                onZero: false,
+                lineStyle: {
+                    color: colors[1]
+                }
+            },
+            axisPointer: {
+                label: {
+                    formatter: function (params) {
+                        return '收入 ' 
+                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                    }
+                }
+            },
+            data: data.mounth
+        },
+        {
+            type: 'category',
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine: {
+                onZero: false,
+                lineStyle: {
+                    color: colors[0]
+                }
+            },
+            axisPointer: {
+                label: {
+                    formatter: function (params) {
+                        return '支出 ' 
+                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                    }
+                }
+            },
+            data: data.mounth
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value'
+        }
+    ],
     series: [
         {
             name:'收入',
             type:'line',
-            stack: '总量',
             data: data.income_list
         },
         {
             name:'支出',
             type:'line',
-            stack: '总量',
+            xAxisIndex: 1,
             data: data.paylist_list
         }] 
         };
-
 
 function decode(text)
 { 

@@ -13,26 +13,6 @@ var listSchema =new  mongoose.Schema({
     type:String,
     comment:String
 });
-/* GET home page. */
-router.get('/add', function(req, res, next) {
-    res.render('income/add',{name:'jing'});
-});
-
-router.post('/submit', function(req, res) {
-    var data = req.body
-    data.time = moment().format("YYYY-MM-DD HH:mm:ss");
-    // console.log(req.body);
-    config.table = 'income';
-    db.save(data,config,function(err,callback){
-        if(err){
-            console.log("err" + err);
-        } else {
-            console.log("insert success");
-            res.render('income/ok');
-        }
-    });
-});
-
 
 function getTime(obj){
     var year = new Set();
@@ -73,7 +53,6 @@ router.all('/list', function(req, res) {
     if (year == "all") {
         content = {money:{"$gt":0},userName:{"$in":user_list}};
         year='全部'
-        
     }
     db.find(content,config,listSchema,function(err, callback){
                 if (err){

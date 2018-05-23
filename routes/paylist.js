@@ -11,8 +11,8 @@ var listSchema =new  mongoose.Schema({
     money: Number,
     time: String,
     type:String,
-    comment:String,
-    picture: String
+    comment:String
+//    picture: String
 
 });
 /* GET home page. */
