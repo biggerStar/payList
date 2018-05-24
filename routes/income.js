@@ -20,8 +20,7 @@ router.get('/add', function(req, res, next) {
 
 router.post('/submit', function(req, res) {
     var data = req.body
-    data.time = moment().format("YYYY-MM-DD HH:mm:ss");
-    // console.log(req.body);
+    //data.time = moment().format("YYYY-MM-DD HH:mm:ss");
     config.table = 'income';
     db.save(data,config,function(err,callback){
         if(err){
