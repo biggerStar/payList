@@ -8,33 +8,53 @@ var config = require("./../conf/config.js");
 var mongoose = require("mongoose");
 var listSchema =new  mongoose.Schema({
     userName: String,
+    financeName: String,
     money: Number,
-    time: String,
+    startTime: String,
+    endTime: String,
     type:String,
+    bank: String,
+    isDelete: Number,
     comment:String
-//    picture: String
-
 });
 /* GET home page. */
 router.get('/add', function(req, res, next) {
-    res.render('paylist/add',{name:'jing'});
+    res.render('finance/add',{name:'jing'});
 });
-router.get('/picture',function(req,res){
-    config.table = "lists";
-    db.find({_id:mongoose.Types.ObjectId(req.query.id)},config,listSchema,function(err, callback) {
-        if (err) {
-            console.log("select err" + err);
-        } else {
-            res.json(callback[0].picture)
-        }
-    });
 
+router.post('/delete', function(req, res, next) {
+    var data = req.body;
+    data.isDelete = 1;
+    config.table = "finance";
+    db.updateFinance(data, config,function(err,callback) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("update success");
+            res.redirect("./list");
+        }
 });
+});
+
+router.post('/update', function(req, res) {
+    var data = req.body;
+    console.log(data)
+    config.table = "finance"
+    db.updateFinance(data, config, function(err,callback) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("update success");
+            res.redirect("./list");
+        }
+});
+});
+
 router.post('/submit', function(req, res) {
     var data = req.body
-    //data.time = moment().format("YYYY-MM-DD HH:mm:ss");
-    config.table = 'list';
-    db.save(data,config,function(err,callback){
+    config.table = 'finance';
+    data.isDelete = 0;
+    db.saveDefine(data,listSchema,config,function(err,callback){
         if(err){
             console.log("err" + err);
         } else {
@@ -42,9 +62,6 @@ router.post('/submit', function(req, res) {
             res.redirect('./list');
         }
     });
-
-
-
 });
 
 
@@ -60,7 +77,7 @@ function getTime(obj){
 
 }
 router.all('/list', function(req, res) {
-    config.table = "list";
+    config.table = "finance";
 
     var month = req.query.month
     var year = req.query.year;
@@ -78,25 +95,13 @@ router.all('/list', function(req, res) {
         user_list.push("jing");
     }
     
-    if (month == null || year == null) {
-        month = moment().format("MM");
-        year = moment().format("YYYY");
-    }
-    var time = year + "-" + month;
-    var content = {money:{"$gt":0},time:{"$gte":time,"$lte":time+"-31"},userName:{"$in":user_list}};
+    var content = {money:{"$gt":0},isDelete:{"$lt":1},userName:{"$in":user_list}};
     db.find(content,config,listSchema,function(err, callback){
                 if (err){
                     console.log("select err" + err);
                 } else {
                     //console.log(callback);
-                    db.find({money:{"$gt":0}},config,listSchema,function(err, callTime) {
-                        if(err) {
-                            console.log(err);
-                        } else {
-                            var time = getTime(callTime);
-                            res.render('paylist/list', {lists:callback,selected_dong:selected_dong,selected_jing:selected_jing, years:time.years,months:time.months,select_year:year,select_month:month,display:JSON.stringify(JSON.stringify(callback))});
-                        }
-                    });
+                    res.render('finance/list',{lists:callback,selected_dong:selected_dong,selected_jing:selected_jing,display:JSON.stringify(JSON.stringify(callback))});
                 }
             });
 });

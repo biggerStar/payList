@@ -18,6 +18,36 @@ var remarkSchema =new  mongoose.Schema({
     time:String,
     picture: String
 });
+
+var updateFinanceSchema = new mongoose.Schema({
+    userName: String,
+    money: Number,
+    startTime: String,
+    endTime: String,
+    type:String,
+    comment:String,
+    isDelete: String,
+    financeName: String,
+    bank: String
+});
+
+
+function updateFinance(data, config, callback){
+
+    console.log("update finance")
+    var db = mongoose.createConnection(config.host);
+    var model = db.model(config.table, updateFinanceSchema);
+    model.update({_id:data._id},{$set:data},function(err){
+        if(err){
+            console.log(err);
+        } else {
+            callback(null,true)
+        }
+        db.close();
+    });
+
+}
+
 function save(data, config, callback){
     console.log("insert data");
     // connection
@@ -38,6 +68,24 @@ function save(data, config, callback){
     });
 }
 
+function saveDefine(data, dataSchema, config, callback){
+    console.log("insert data");
+    // connection
+    var db = mongoose.createConnection(config.host);
+    // model or class
+    var listModel = db.model(config.table, dataSchema);
+    // instance
+    var insertData = new listModel(data);
+    insertData.save(function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+            callback(null, true);
+            console.log('成功插入数据');
+        }
+        db.close();
+    });
+}
 function saveRemark(data, config, callback){
     console.log("insert data");
     // connection
@@ -113,3 +161,5 @@ module.exports.find = find;
 module.exports.saveRemark = saveRemark;
 module.exports.removeRemark=removeRemark;
 module.exports.findSomeTable= findSomeTable;
+module.exports.saveDefine= saveDefine;
+module.exports.updateFinance = updateFinance;

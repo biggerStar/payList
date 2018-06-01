@@ -27,24 +27,20 @@ router.post('/submit', function(req, res) {
             console.log("err" + err);
         } else {
             console.log("insert success");
-            res.render('income/ok');
+            res.redirect('./list');
         }
     });
-    //var list = pay.select({});
-    //console.dir("result:" + list);
-    //res.render('paylist/list', {lists:list});
-
-
 });
-
 
 function getTime(obj){
     var year = new Set();
     var month = new Set();
     obj.forEach(function(data) {
         var time = data.time;
+        if (time){
         year.add(time.split("-")[0]);
         month.add(time.split("-")[1]);
+        }
     });
     return {years:year,months:month}
 
@@ -78,7 +74,7 @@ router.all('/list', function(req, res) {
                 if (err){
                     console.log("select err" + err);
                 } else {
-                    console.log(callback);
+                    //console.log(callback);
                     db.find({money:{"$gt":0}},config,listSchema,function(err, callTime) {
                         if(err) {
                             console.log(err);

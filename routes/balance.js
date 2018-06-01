@@ -58,7 +58,7 @@ router.all('/list', function(req, res) {
                 if (err){
                     console.log("select err" + err);
                 } else {
-                    console.log(callback);
+                    //console.log(callback);
                     config.table = 'list';
                     db.find(content, config, listSchema, function(err, callTime) {
                         if(err) {

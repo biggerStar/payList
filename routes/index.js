@@ -30,6 +30,5 @@ router.get('/logout',function(req,res){
 });
 router.post('/submit', function(req,res){
     var data=req.body;
-    console.log(data);
 });
 module.exports = router;

@@ -11,6 +11,7 @@ var users = require('./routes/users');
 var paylist = require('./routes/paylist');
 var income= require('./routes/income');
 var balance = require('./routes/balance');
+var finance= require('./routes/finance');
 var remark = require('./routes/remark');
 var app = express();
 var login = require('./routes/login');
@@ -45,6 +46,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/paylist', paylist);
 app.use('/income', income);
+app.use('/finance', finance);
 app.use('/balance', balance);
 app.use('/remark', remark);
 
