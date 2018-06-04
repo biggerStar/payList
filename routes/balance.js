@@ -61,7 +61,7 @@ router.all('/list', function(req, res) {
                 } else {
                     //console.log(callback);
                     config.table = 'list';
-                    db.find(content, model.listIncomeModel, function(err, callTime) {
+                    db.find(content, model.listPayModel, function(err, callTime) {
                         if(err) {
                             console.log(err);
                         } else {
