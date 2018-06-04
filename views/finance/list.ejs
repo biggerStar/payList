@@ -112,9 +112,12 @@
                             <%if(list.userName=='dong'){%><td>冬</td><%}%>
 						<td><%=list.financeName%></td>
 						<td><%=list.money %></td>
+                        <% if(list.type){ %>
                         <%if(list.type==1){%><td>定期</td><%}%>
                         <%if(list.type==2){%><td>基金</td><%}%>
                         <%if(list.type==3){%><td>股票</td><%}%>
+                        <%if(list.type==4){%><td>储蓄</td><%}%>
+                        <% }else{ %><td>无</td><% } %>
                         <% if(list.bank){ %>
                         <%if(list.bank==1){%><td>招行</td><%}%>
                         <%if(list.bank==2){%><td>百度</td><%}%>
@@ -403,6 +406,7 @@ var typeMapping = new Map();
 typeMapping.set("1","定期");
 typeMapping.set("2","基金");
 typeMapping.set("3","股票");
+typeMapping.set("4","储蓄");
 
     var legendData = [];
     var seriesData = [];
