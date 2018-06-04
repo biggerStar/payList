@@ -101,6 +101,7 @@
 						    <th>机构</th>
                             <th>购买时间</th>
                             <th>到期时间</th>
+						    <th>收益</th>
 						    <th>备注</th>
 						    <th>操作</th>
 					</tr></thead>
@@ -132,6 +133,11 @@
                         <%if(list.endTime){%>
                         <td>
                             <%=list.endTime %>
+                        </td>
+                         <% }else{ %><td>无</td><% } %>
+                        <%if(list.gain){%>
+                        <td>
+                            <%=list.gain%>
                         </td>
                          <% }else{ %><td>无</td><% } %>
                         <%if(list.comment){%>
@@ -187,6 +193,10 @@
                 </div>
                 <div>
                     <input type="hidden" class="form-control" id="_id" name="_id" value="<%=list._id%>"/>
+                </div>
+                <div>
+                    <label for="">收益</label>
+                    <input type="text" class="form-control" id="gain" name="gain" value="<%=list.gain%>"/>
                 </div>
                 <div>
                     <label for="">备注</label>

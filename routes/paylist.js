@@ -2,39 +2,32 @@ var express = require('express');
 var moment = require('moment');
 var router = express.Router();
 var pay = require('./../app/paylist.js');
+var model = require('../app/model.js');
 var qs = require("querystring");
 var db = require("./../app/db.js");
 var config = require("./../conf/config.js");
 var mongoose = require("mongoose");
-var listSchema =new  mongoose.Schema({
-    userName: String,
-    money: Number,
-    time: String,
-    type:String,
-    comment:String
-//    picture: String
-
-});
 /* GET home page. */
+
 router.get('/add', function(req, res, next) {
     res.render('paylist/add',{name:'jing'});
 });
 router.get('/picture',function(req,res){
     config.table = "lists";
-    db.find({_id:mongoose.Types.ObjectId(req.query.id)},config,listSchema,function(err, callback) {
+    db.find({_id:mongoose.Types.ObjectId(req.query.id)},config,function(err, callback) {
         if (err) {
             console.log("select err" + err);
         } else {
             res.json(callback[0].picture)
         }
     });
-
 });
+
 router.post('/submit', function(req, res) {
     var data = req.body
     //data.time = moment().format("YYYY-MM-DD HH:mm:ss");
     config.table = 'list';
-    db.save(data,config,function(err,callback){
+    db.save(data,model.listPayModel, function(err,callback){
         if(err){
             console.log("err" + err);
         } else {
@@ -42,11 +35,7 @@ router.post('/submit', function(req, res) {
             res.redirect('./list');
         }
     });
-
-
-
 });
-
 
 function getTime(obj){
     var year = new Set();
@@ -57,11 +46,10 @@ function getTime(obj){
         month.add(time.split("-")[1]);
     });
     return {years:year,months:month}
-
 }
+
 router.all('/list', function(req, res) {
     config.table = "list";
-
     var month = req.query.month
     var year = req.query.year;
     var selected_dong = req.query.dong_selected;
@@ -84,12 +72,12 @@ router.all('/list', function(req, res) {
     }
     var time = year + "-" + month;
     var content = {money:{"$gt":0},time:{"$gte":time,"$lte":time+"-31"},userName:{"$in":user_list}};
-    db.find(content,config,listSchema,function(err, callback){
+    db.find(content,model.listPayModel, function(err, callback){
                 if (err){
                     console.log("select err" + err);
                 } else {
                     //console.log(callback);
-                    db.find({money:{"$gt":0}},config,listSchema,function(err, callTime) {
+                    db.find({money:{"$gt":0}},model.listPayModel,function(err, callTime) {
                         if(err) {
                             console.log(err);
                         } else {

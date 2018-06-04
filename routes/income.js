@@ -6,13 +6,8 @@ var qs = require("querystring");
 var db = require("./../app/db.js");
 var config = require("./../conf/config.js");
 var mongoose = require("mongoose");
-var listSchema =new  mongoose.Schema({
-    userName: String,
-    money: Number,
-    time: String,
-    type:String,
-    comment:String
-});
+var model = require('../app/model.js');
+
 /* GET home page. */
 router.get('/add', function(req, res, next) {
     res.render('income/add',{name:'jing'});
@@ -20,9 +15,7 @@ router.get('/add', function(req, res, next) {
 
 router.post('/submit', function(req, res) {
     var data = req.body
-    //data.time = moment().format("YYYY-MM-DD HH:mm:ss");
-    config.table = 'income';
-    db.save(data,config,function(err,callback){
+    db.save(data,model.listIncomeModel,function(err,callback){
         if(err){
             console.log("err" + err);
         } else {
@@ -46,8 +39,6 @@ function getTime(obj){
 
 }
 router.all('/list', function(req, res) {
-    config.table = "income";
-
     var month = req.query.month
     var year = req.query.year;
     var selected_dong = req.query.dong_selected;
@@ -70,12 +61,12 @@ router.all('/list', function(req, res) {
     }
     var time = year + "-" + month;
     var content = {money:{"$gt":0},time:{"$gte":time,"$lte":time+"-31"},userName:{"$in":user_list}};
- db.find(content,config,listSchema,function(err, callback){
+ db.find(content,model.listIncomeModel,function(err, callback){
                 if (err){
                     console.log("select err" + err);
                 } else {
                     //console.log(callback);
-                    db.find({money:{"$gt":0}},config,listSchema,function(err, callTime) {
+                    db.find({money:{"$gt":0}},model.listIncomeModel,function(err, callTime) {
                         if(err) {
                             console.log(err);
                         } else {

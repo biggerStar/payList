@@ -1,4 +1,5 @@
 var express = require('express');
+var model = require('../app/model.js');
 var router = express.Router();
 /* GET home page. */
 var config = require("./../conf/config.js");
@@ -12,10 +13,9 @@ var mongoose = require("mongoose");
       comment:String
   });
 router.get('/', function(req, res, next) {
-    config.table = "remark";
     console.log("remark select");
     var content = {};
-    db.find(content, config,listSchema,function(err,callback){
+    db.find(content, model.listRemarkModel,function(err,callback){
         if (err) {
             console.log("select err" + err);
         } else {

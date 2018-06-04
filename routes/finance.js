@@ -1,4 +1,5 @@
 var express = require('express');
+var model = require('../app/model.js');
 var moment = require('moment');
 var router = express.Router();
 var pay = require('./../app/paylist.js');
@@ -6,17 +7,8 @@ var qs = require("querystring");
 var db = require("./../app/db.js");
 var config = require("./../conf/config.js");
 var mongoose = require("mongoose");
-var listSchema =new  mongoose.Schema({
-    userName: String,
-    financeName: String,
-    money: Number,
-    startTime: String,
-    endTime: String,
-    type:String,
-    bank: String,
-    isDelete: Number,
-    comment:String
-});
+
+
 /* GET home page. */
 router.get('/add', function(req, res, next) {
     res.render('finance/add',{name:'jing'});
@@ -25,8 +17,7 @@ router.get('/add', function(req, res, next) {
 router.post('/delete', function(req, res, next) {
     var data = req.body;
     data.isDelete = 1;
-    config.table = "finance";
-    db.updateFinance(data, config,function(err,callback) {
+    db.updateFinance(data, model.updateFinanceModel,function(err,callback) {
         if (err) {
             console.log(err);
         } else {
@@ -39,8 +30,7 @@ router.post('/delete', function(req, res, next) {
 router.post('/update', function(req, res) {
     var data = req.body;
     console.log(data)
-    config.table = "finance"
-    db.updateFinance(data, config, function(err,callback) {
+    db.updateFinance(data, model.updateFinanceModel, function(err,callback) {
         if (err) {
             console.log(err);
         } else {
@@ -52,9 +42,8 @@ router.post('/update', function(req, res) {
 
 router.post('/submit', function(req, res) {
     var data = req.body
-    config.table = 'finance';
     data.isDelete = 0;
-    db.saveDefine(data,listSchema,config,function(err,callback){
+    db.saveDefine(data,model.updateFinanceModel,function(err,callback){
         if(err){
             console.log("err" + err);
         } else {
@@ -77,8 +66,6 @@ function getTime(obj){
 
 }
 router.all('/list', function(req, res) {
-    config.table = "finance";
-
     var month = req.query.month
     var year = req.query.year;
     var selected_dong = req.query.dong_selected;
@@ -96,11 +83,10 @@ router.all('/list', function(req, res) {
     }
     
     var content = {money:{"$gt":0},isDelete:{"$lt":1},userName:{"$in":user_list}};
-    db.find(content,config,listSchema,function(err, callback){
+    db.find(content,model.updateFinanceModel,function(err, callback){
                 if (err){
                     console.log("select err" + err);
                 } else {
-                    //console.log(callback);
                     res.render('finance/list',{lists:callback,selected_dong:selected_dong,selected_jing:selected_jing,display:JSON.stringify(JSON.stringify(callback))});
                 }
             });

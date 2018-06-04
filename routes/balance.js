@@ -1,4 +1,5 @@
 var express = require('express');
+var model = require('../app/model.js');
 var moment = require('moment');
 var router = express.Router();
 var pay = require('./../app/paylist.js');
@@ -54,13 +55,13 @@ router.all('/list', function(req, res) {
         content = {money:{"$gt":0},userName:{"$in":user_list}};
         year='全部'
     }
-    db.find(content,config,listSchema1,function(err, callback){
+    db.find(content,model.listIncomeModel,function(err, callback){
                 if (err){
                     console.log("select err" + err);
                 } else {
                     //console.log(callback);
                     config.table = 'list';
-                    db.find(content, config,listSchema1, function(err, callTime) {
+                    db.find(content, model.listIncomeModel, function(err, callTime) {
                         if(err) {
                             console.log(err);
                         } else {

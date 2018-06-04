@@ -1,58 +1,21 @@
 var MongoClient = require("mongodb").MongoClient;
 var mongoose = require('mongoose');
+mongoose.createConnection("127.0.0.1:27017");
 
-
-var listSchema =new  mongoose.Schema({
-    userName: String,
-    money: Number,
-    time: String,
-    type:String,
-    comment:String
-});
-
-var remarkSchema =new  mongoose.Schema({
-    userName: String,
-    comment: String,
-    type: String,
-    time:String,
-    picture: String
-});
-
-var updateFinanceSchema = new mongoose.Schema({
-    userName: String,
-    money: Number,
-    startTime: String,
-    endTime: String,
-    type:String,
-    comment:String,
-    isDelete: String,
-    financeName: String,
-    bank: String
-});
-
-
-function updateFinance(data, config, callback){
-
+function updateFinance(data, model, callback){
     console.log("update finance")
-    var db = mongoose.createConnection(config.host);
-    var model = mongoose.model(config.table, updateFinanceSchema);
     model.update({_id:data._id},{$set:data},function(err){
         if(err){
             console.log(err);
         } else {
             callback(null,true)
         }
-    //    mongoose.close();
     });
-
 }
 
-function save(data, config, callback){
+function save(data, listModel, callback){
     console.log("insert data");
     // connection
-    var db = mongoose.createConnection(config.host);
-    // model or class
-    var listModel = mongoose.model(config.table, listSchema);
     // instance
     var content = {comment:data.comment,userName:data.userName,money:data.money,type:data.type,time:data.time,picture:data.picture};
     var insertData = new listModel(content);
@@ -67,13 +30,9 @@ function save(data, config, callback){
     });
 }
 
-function saveDefine(data, dataSchema, config, callback){
+function saveDefine(data, listModel, callback){
     console.log("insert data");
     // connection
-    var db = mongoose.createConnection(config.host);
-    // model or class
-    var listModel = mongoose.model(config.table, dataSchema);
-    // instance
     var insertData = new listModel(data);
     insertData.save(function(err,result){
         if(err){
@@ -120,18 +79,15 @@ function removeRemark(data,config,callback){
     });
 }
 
-function find(content, config, schema  ,callback) {
-    var db = mongoose.createConnection(config.host);
-    var listMode = mongoose.model(config.table, listSchema);
+function find(content, listModel ,callback) {
     var sort={time:-1}
-    listMode.find(content,'-__v',{sort:{time:-1}},function(err,result){
+    listModel.find(content,'-__v',{sort:{time:-1}},function(err,result){
         if(err){
             console.log(err);
         }else{
             callback(null,result);
         }
-     //   mongoose.close();
-        });
+    });
 }
 
 function findSomeTable(content,schema,config,callback){

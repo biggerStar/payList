@@ -13,7 +13,7 @@ var https = require('https');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort('30000');
+var port = normalizePort('4430');
 app.set('port', port);
 
 //encryption
@@ -27,7 +27,7 @@ var options = {
   cert: ca
 };
 
-var server = https.createServer(options, app).listen(443);
+var server = https.createServer(options, app).listen(port);
 
 /**
  * Listen on provided port, on all network interfaces.
