@@ -26,7 +26,6 @@ router.get('/picture',function(req,res){
 router.post('/submit', function(req, res) {
     var data = req.body
     //data.time = moment().format("YYYY-MM-DD HH:mm:ss");
-    config.table = 'list';
     db.save(data,model.listPayModel, function(err,callback){
         if(err){
             console.log("err" + err);
