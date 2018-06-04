@@ -1,6 +1,7 @@
 var MongoClient = require("mongodb").MongoClient;
 var mongoose = require('mongoose');
-mongoose.createConnection("127.0.0.1:27017");
+var config = require('../conf/config.js');
+mongoose.createConnection(config.host);
 
 function updateFinance(data, model, callback){
     console.log("update finance")
