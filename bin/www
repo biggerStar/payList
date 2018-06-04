@@ -5,8 +5,9 @@
  */
 
 var app = require('../app');
+var fs = require('fs');
 var debug = require('debug')('paylistapp:server');
-var http = require('http');
+var https = require('https');
 
 /**
  * Get port from environment and store in Express.
@@ -15,11 +16,18 @@ var http = require('http');
 var port = normalizePort('30000');
 app.set('port', port);
 
+//encryption
+var key = fs.readFileSync('util/180.76.98.190.key');
+var ca = fs.readFileSync( 'util/180.76.98.190.crt' );
 /**
  * Create HTTP server.
  */
+var options = {
+  key: key,
+  cert: ca
+};
 
-var server = http.createServer(app);
+var server = https.createServer(options, app).listen(443);
 
 /**
  * Listen on provided port, on all network interfaces.

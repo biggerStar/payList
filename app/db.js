@@ -7,8 +7,7 @@ var listSchema =new  mongoose.Schema({
     money: Number,
     time: String,
     type:String,
-    comment:String,
-    picture: String
+    comment:String
 });
 
 var remarkSchema =new  mongoose.Schema({
@@ -36,14 +35,14 @@ function updateFinance(data, config, callback){
 
     console.log("update finance")
     var db = mongoose.createConnection(config.host);
-    var model = db.model(config.table, updateFinanceSchema);
+    var model = mongoose.model(config.table, updateFinanceSchema);
     model.update({_id:data._id},{$set:data},function(err){
         if(err){
             console.log(err);
         } else {
             callback(null,true)
         }
-        db.close();
+    //    mongoose.close();
     });
 
 }
@@ -53,7 +52,7 @@ function save(data, config, callback){
     // connection
     var db = mongoose.createConnection(config.host);
     // model or class
-    var listModel = db.model(config.table, listSchema);
+    var listModel = mongoose.model(config.table, listSchema);
     // instance
     var content = {comment:data.comment,userName:data.userName,money:data.money,type:data.type,time:data.time,picture:data.picture};
     var insertData = new listModel(content);
@@ -64,7 +63,7 @@ function save(data, config, callback){
             callback(null, true);
             console.log('成功插入数据');
         }
-        db.close();
+    //    mongoose.close();
     });
 }
 
@@ -73,7 +72,7 @@ function saveDefine(data, dataSchema, config, callback){
     // connection
     var db = mongoose.createConnection(config.host);
     // model or class
-    var listModel = db.model(config.table, dataSchema);
+    var listModel = mongoose.model(config.table, dataSchema);
     // instance
     var insertData = new listModel(data);
     insertData.save(function(err,result){
@@ -83,7 +82,7 @@ function saveDefine(data, dataSchema, config, callback){
             callback(null, true);
             console.log('成功插入数据');
         }
-        db.close();
+     //   mongoose.close();
     });
 }
 function saveRemark(data, config, callback){
@@ -91,7 +90,7 @@ function saveRemark(data, config, callback){
     // connection
     var db = mongoose.createConnection(config.host);
     // model or class
-    var remarkModel = db.model(config.table, remarkSchema);
+    var remarkModel = mongoose.model(config.table, remarkSchema);
     // instance
     var content = {comment:data.comment,userName:data.userName,type:data.type,time:data.time,picture:data.picture};
     var insertData = new remarkModel(content);
@@ -102,7 +101,7 @@ function saveRemark(data, config, callback){
             callback(null, true);
             console.log('成功插入数据');
         }
-        db.close();
+      //  mongoose.close();
     });
 }
 function removeRemark(data,config,callback){
@@ -117,13 +116,13 @@ function removeRemark(data,config,callback){
             console.log("update");
              callback(null, true);
         }
-        db.close();
+    //    mongoose.close();
     });
 }
 
-function find(content, config,schema, callback) {
+function find(content, config, schema  ,callback) {
     var db = mongoose.createConnection(config.host);
-    var listMode = db.model(config.table, schema);
+    var listMode = mongoose.model(config.table, listSchema);
     var sort={time:-1}
     listMode.find(content,'-__v',{sort:{time:-1}},function(err,result){
         if(err){
@@ -131,21 +130,21 @@ function find(content, config,schema, callback) {
         }else{
             callback(null,result);
         }
-        db.close();
+     //   mongoose.close();
         });
 }
 
 function findSomeTable(content,schema,config,callback){
     console.log('connection')
     var db = mongoose.connect(config.host);
-    var mode = db.model(config.table,schema);
+    var mode = mongoose.model(config.table,schema);
     mode.findOne(content, function(err, result){
         if(err){
             console.log(err);
         } else{
             callback(null,result);
         }
-        db.disconnect();
+      //  mongoose.disconnect();
     });
 }
 

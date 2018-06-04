@@ -6,7 +6,7 @@ var qs = require("querystring");
 var db = require("./../app/db.js");
 var config = require("./../conf/config.js");
 var mongoose = require("mongoose");
-var listSchema =new  mongoose.Schema({
+var listSchema1 =new  mongoose.Schema({
     userName: String,
     money: Number,
     time: String,
@@ -54,13 +54,13 @@ router.all('/list', function(req, res) {
         content = {money:{"$gt":0},userName:{"$in":user_list}};
         year='全部'
     }
-    db.find(content,config,listSchema,function(err, callback){
+    db.find(content,config,listSchema1,function(err, callback){
                 if (err){
                     console.log("select err" + err);
                 } else {
                     //console.log(callback);
                     config.table = 'list';
-                    db.find(content, config, listSchema, function(err, callTime) {
+                    db.find(content, config,listSchema1, function(err, callTime) {
                         if(err) {
                             console.log(err);
                         } else {

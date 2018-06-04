@@ -28,7 +28,7 @@ app.use(session({
     rolling:true,
     saveUninitialized : false,
     cookie : config.cookie,
-    store : new RedisStore(config.sessionStore)
+//    store : new RedisStore(config.sessionStore)
 }));
 
 //app.use(session({ secret: 'keyboard cat',
