@@ -82,7 +82,7 @@ function removeRemark(data,config,callback){
 
 function find(content, listModel ,callback) {
     var sort={time:-1}
-    listModel.find(content,'-__v',{sort:{time:-1}},function(err,result){
+    listModel.find(content,'-__v',{sort:{_id:-1}},function(err,result){
         if(err){
             console.log(err);
         }else{

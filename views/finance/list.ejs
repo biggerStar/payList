@@ -6,6 +6,9 @@
       <!-- 引入 Bootstrap -->
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
       <script src="../javascripts/echarts.min.js"></script> 
+      <link  href="../js/bootstrap-datepicker.js" />
+    <link  href="../javascripts/bootstrap.min.js"/>
+    <link  href="../javascripts/jquery.js"/>
       <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
       <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
       <!--[if lt IE 9]>
@@ -30,6 +33,8 @@
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                     <a class="navbar-brand" href="/">首页</a>
+                </div>
+                <div class="navbar-body">
                     <ul class="navbar-brand">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">支出</a>
@@ -114,9 +119,10 @@
 						<td><%=list.money %></td>
                         <% if(list.type){ %>
                         <%if(list.type==1){%><td>定期</td><%}%>
-                        <%if(list.type==2){%><td>基金</td><%}%>
+                        <%if(list.type==2){%><td>股票基金</td><%}%>
                         <%if(list.type==3){%><td>股票</td><%}%>
                         <%if(list.type==4){%><td>储蓄</td><%}%>
+                        <%if(list.type==5){%><td>货币基金</td><%}%>
                         <% }else{ %><td>无</td><% } %>
                         <% if(list.bank){ %>
                         <%if(list.bank==1){%><td>招行</td><%}%>
@@ -193,6 +199,18 @@
                       elem: '#endTime' //指定元素
                     });
                 </script>
+                </div>
+
+				<div class="form-group">
+					 <label for="">类型</label>
+                     <!-- <input type="text" class="form-control" id="comment" />-->
+                     <select class="form-control" name="type">
+                         <option value="1">定期</option>
+                         <option value="2">股票基金</option>
+                         <option value="3">股票</option>
+                         <option value="4">储蓄</option>
+                         <option value="5">货币基金</option>
+				    </select>
                 </div>
                 <div>
                     <input type="hidden" class="form-control" id="_id" name="_id" value="<%=list._id%>"/>
@@ -404,9 +422,10 @@ function genData() {
    // var list = <%lists%>;
 var typeMapping = new Map();
 typeMapping.set("1","定期");
-typeMapping.set("2","基金");
+typeMapping.set("2","股票基金");
 typeMapping.set("3","股票");
 typeMapping.set("4","储蓄");
+typeMapping.set("5","货币基金");
 
     var legendData = [];
     var seriesData = [];
