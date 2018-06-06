@@ -171,8 +171,8 @@
                 <div class="form-group">
 	            	<label for="userName">我是谁</label>
                     <select class="form-control" name="userName" value="<%=list.userName%>">
-		            	<option value="jing">宝</option>
-		                <option value="dong">冬</option>
+		            	<option value="jing" <%if(list.userName=="jing"){%>selected="selected"<%}%>>宝</option>
+		                <option value="dong" <%if(list.userName=="dong"){%>selected="selected"<%}%>>冬</option>
 	            	</select>
             	</div> 
 
@@ -204,12 +204,12 @@
 				<div class="form-group">
 					 <label for="">类型</label>
                      <!-- <input type="text" class="form-control" id="comment" />-->
-                     <select class="form-control" name="type">
-                         <option value="1">定期</option>
-                         <option value="2">股票基金</option>
-                         <option value="3">股票</option>
-                         <option value="4">储蓄</option>
-                         <option value="5">货币基金</option>
+                     <select class="form-control" name="type" value="<%=list.type%>">
+                         <option value="1" <%if(list.type==1){%>selected="selected"<%}%>>定期</option>
+                         <option value="2" <%if(list.type==2){%>selected="selected"<%}%>>股票基金</option>
+                         <option value="3" <%if(list.type==3){%>selected="selected"<%}%>>股票</option>
+                         <option value="4" <%if(list.type==4){%>selected="selected"<%}%>>储蓄</option>
+                         <option value="5" <%if(list.type==5){%>selected="selected"<%}%>>货币基金</option>
 				    </select>
                 </div>
                 <div>
@@ -490,6 +490,6 @@ typeMapping.set("5","货币基金");
         window.location.href='/paylist/list?month='+mounth+'&year='+year+"&dong_selected=true&jing_selected=true";
     };
     </script>
-    
+ <link rel="stylesheet" href="../js/bootstrap-datepicker.js" />   
    </body>
 </html>
