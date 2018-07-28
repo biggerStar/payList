@@ -1,0 +1,176 @@
+<br>
+<p>
+  <button type="button" class=" btn btn-light active" disabled>SELECT:</button>
+  <button type="button" class="btn btn-outline-primary active" style="margin-right:10px;" data-toggle="button" aria-pressed="false"
+    autocomplete="on" (click)="selectUser($event)">
+    Dong
+  </button>
+  <button type="button" class="btn btn-outline-primary active" data-toggle="button" aria-pressed="false" autocomplete="on"
+    (click)="selectUser($event)">
+    Jing
+  </button>
+</p>
+
+<hr>
+<div class="tabbable" id="tabs-967670" style="margin-right:10px;">
+  <ul class="nav nav-tabs">
+    <li class="nav-item ">
+      <a class="nav-link active" href="#detail" data-toggle="tab">精确数据</a>
+    </li>
+    <li class="nav-item">
+      <a href="#finance_type" class="nav-link" data-toggle="tab">理财类型</a>
+    </li>
+    <li class="nav-item">
+      <a href="#bank_type" data-toggle="tab" class="nav-link">理财机构</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="detail">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>成员</th>
+            <th>名称</th>
+            <th>金额</th>
+            <th>类型</th>
+            <th>机构</th>
+            <th>购买时间</th>
+            <th>到期时间</th>
+            <th>收益</th>
+            <th>备注</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let list of displayLists">
+            <td>{{list.userName}}</td>
+            <td>{{list.financeName}}</td>
+            <td>{{list.money}}</td>
+            <td>{{list.type}}</td>
+            <td>{{list.bank}}</td>
+            <td>{{list.startTime}}</td>
+            <td>{{list.endTime}}</td>
+            <td>{{list.gain}}</td>
+            <td>{{list.comment}}</td>
+            <td>
+              <a  href="#{{list._id}}" role="button" class="btn btn-light" data-toggle="modal" (click)="getModifyData(list._id)">修改</a>
+              <div class="modal fade" id="{{list._id}}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <form #form="ngForm" (ngSubmit)="onSubmitUpdate(form)"  class="demo">
+
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">
+                          修改一下
+                        </h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group input-group mb-3" style="margin-inline-start: 10px">
+                          <div class="input-group-append">
+                            <label class="input-group-text" for="inputGroupSelect02">我是</label>
+                          </div>
+                          <select class="form-control custom-select"  name="userName" [(ngModel)]="modifyTemplate.userName">
+                            <option *ngFor="let user of getUsers()" [value]="user">{{user}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group input-group mb-3">
+                          <div class="input-group-append">
+                            <label class="input-group-text" for="inputGroupSelect02">名称</label>
+                          </div>
+                          <input type="text" class="form-control" name="financeName" [(ngModel)]="modifyTemplate.financeName" />
+                        </div>
+
+                        <div class="form-group input-group mb-3">
+                          <div class="input-group-append">
+                            <label class="input-group-text" for="inputGroupSelect02">金额</label>
+                          </div>
+                          <input type="number" class="form-control" name="money" [(ngModel)]="modifyTemplate.money" />
+                          <span class="input-group-text">$</span>
+                        </div>
+
+                        <div class="form-group input-group mb-3">
+                          <div class="input-group-append">
+                            <label class="input-group-text" for="inputGroupSelect02">购买起止日期</label>
+                          </div>
+                          <angular2-date-picker name="startTime" [(ngModel)]="modifyTemplate.startTime" [settings]="settings"
+                            class="form-control"></angular2-date-picker>
+                          <span class="input-group-text">-</span>
+                          <angular2-date-picker (onDateSelect)="onDateSelect($event)" name="endTime" [(ngModel)]="modifyTemplate.endTime" [settings]="settings"
+                            class="form-control"></angular2-date-picker>
+                        </div>
+                        <div class="form-group input-group mb-3">
+                          <div class="input-group-append">
+                            <label class="input-group-text" for="inputGroupSelect02">类型</label>
+                          </div>
+                          <select class="form-control custom-select " id="type" name="type" [(ngModel)]="modifyTemplate.type">
+                            <option *ngFor="let type of getTypes()" [value]="type">{{type}}</option>
+                          </select>
+                        </div>
+                        
+                        <div class="form-group input-group mb-3">
+                            <div class="input-group-append">
+                              <label class="input-group-text" for="inputGroupSelect02">类型</label>
+                            </div>
+                            <select class="form-control custom-select " id="bank" name="bank" [(ngModel)]="modifyTemplate.bank">
+                              <option *ngFor="let bank of getBanks()" [value]="bank">{{bank}}</option>
+                            </select>
+                          </div>
+
+                        <div class="form-group input-group mb-3">
+                          <div class="input-group-append">
+                            <label class="input-group-text" for="inputGroupSelect02">收益</label>
+                          </div>
+                          <input type="text" class="form-control" name="gain" [(ngModel)]="modifyTemplate.gain" />
+                        </div>
+                        <div class="form-group input-group mb-3">
+                          <div class="input-group-append">
+                            <label class="input-group-text" for="inputGroupSelect02">备注</label>
+                          </div>
+                          <input type="text" class="form-control" name="comment" [(ngModel)]="modifyTemplate.comment" />
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="cancel($event)">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+
+                      </div>
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+
+              <a id="modal-955381" href="#delete_{{list._id}}" role="button" class="btn btn-warning" data-toggle="modal">删除</a>
+              <div class="modal fade" id="delete_{{list._id}}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <form  #f="ngForm"  (ngSubmit)="onSubmitDelete(list._id)"  class="demo">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">
+                          确认删除吗？
+                        </h4>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">考虑一下</button>
+                        <button type="submit" class="btn btn-primary">删掉吧</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane" id="finance_type" data-toggle="tab">
+      <div echarts [options]="finance_options" class="demo-chart"></div>
+    </div>
+    <div class="tab-pane" id="bank_type" data-toggle="tab">
+      <div echarts [options]="bank_options" class="demo-chart"></div>
+    </div>
+  </div>
+</div>

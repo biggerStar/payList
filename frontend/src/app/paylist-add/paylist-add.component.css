@@ -1,0 +1,16 @@
+.demo{
+    /* height: 400px; */
+    /* width:300px; */
+    text-align:right;
+    margin-left:40px;
+    margin-right:40px;
+    margin-top:20px;
+  }
+
+.wrap{
+    line-height: 400px;
+    text-align:center;
+    height: 400px;
+    font-size: 36px;
+    background-color: #ccc;
+  }

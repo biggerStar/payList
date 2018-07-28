@@ -1,0 +1,58 @@
+<br>
+<p>
+    <button type="button" class=" btn btn-light active" disabled>SELECT:</button>
+    <button type="button" class="btn btn-outline-primary active" style="margin-right:10px;" data-toggle="button" aria-pressed="false"
+        autocomplete="on" (click)="selectUser($event)">
+        Dong
+    </button>
+    <button type="button" class="btn btn-outline-primary active" data-toggle="button" aria-pressed="false" autocomplete="on"
+        (click)="selectUser($event)">
+        Jing
+    </button>
+</p>
+
+<button type="button" class=" btn btn-light" disabled style="margin-right:10px;">TIME:</button>
+<select class="selectpicker btn btn-info" style="margin-right:10px;" [ngModel]="control.time" (ngModelChange)="selectTime($event)">
+    <option *ngFor="let list of getTime()">{{list}}</option>
+</select>
+
+
+<hr>
+<div class="tabbable" id="tabs-967670" style="margin-right:10px;">
+    <ul class="nav nav-tabs">
+        <li class="nav-item ">
+            <a class="nav-link active" href="#detail" data-toggle="tab">Detail List</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#display" data-toggle="tab">Chart Display</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="detail">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Member</th>
+                        <th>Cost</th>
+                        <th>Type</th>
+                        <th>Note</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let list of displayLists">
+                        <td>{{list.userName}}</td>
+                        <td>{{list.money}}</td>
+                        <td>{{list.type}}</td>
+                        <td>{{list.comment}}</td>
+                        <td>{{list.time}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="display" data-toggle="tab">
+            <div echarts [options]="options" class="demo-chart"></div>
+        </div>
+    </div>
+</div>

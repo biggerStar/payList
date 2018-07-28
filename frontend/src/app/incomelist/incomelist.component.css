@@ -1,0 +1,8 @@
+.demo-chart {
+    height: 400px;
+    width:300px;
+  }
+
+  .button:focus{
+    background:olive;
+}
