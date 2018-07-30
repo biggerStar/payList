@@ -10,7 +10,6 @@ var config = require("./../conf/config.js");
 router.post('/submit', function(req,res){
     var data = req.body;
     data.time = moment().format("YYYY-MM-DD");
-    console.log( data);
     config.table='remark';
     db.saveRemark(data, config, function(err, call){
         if(err){
@@ -25,7 +24,6 @@ router.post('/submit', function(req,res){
 
 router.get('/remove',function(req,res){
     var data = req.query;
-    console.log(data);
     config.table='remark';
     db.removeRemark(data,config,function(err,callback){
         if(err) {

@@ -14,7 +14,6 @@ function getList(request, response) {
     );
 }
 function update(request, response) {
-    console.log("update")
     if(!request || !request.body || !request.body._id || typeof(request.body.money) != 'number' || request.body.money <= 0 ||!(request.body.userName =="dong" || request.body.userName == "jing")) {
         return response.json({"status":"error data"})
     }

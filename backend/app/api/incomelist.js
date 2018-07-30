@@ -5,7 +5,6 @@ module.exports = {
 }
 
 function getList(request, response) {
-    console.log("income list")
     return db.getIncomelist().then(
         (lists) => {
             response.json({"data":lists,"size":lists.length});

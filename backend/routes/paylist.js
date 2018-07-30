@@ -75,7 +75,6 @@ router.all('/list', function(req, res) {
                 if (err){
                     console.log("select err" + err);
                 } else {
-                    //console.log(callback);
                     db.find({money:{"$gt":0}},model.listPayModel,function(err, callTime) {
                         if(err) {
                             console.log(err);

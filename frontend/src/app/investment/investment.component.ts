@@ -56,7 +56,6 @@ export class InvestmentComponent implements OnInit {
   }
 
   onSubmitDelete(id: string) {
-    console.log(id);
     this.investmentService.removeFinanceList(id).subscribe(x => {
       if (x && x["status"]) {
         location.reload();
@@ -88,7 +87,6 @@ export class InvestmentComponent implements OnInit {
       }
     });
     this.modifyTemplate = rollback;
-    console.log(rollback)
   }
 
   getUsers() {

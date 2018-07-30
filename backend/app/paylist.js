@@ -6,7 +6,6 @@ var mongo = require("mongodb");
 
 function insert(data) {
     config.table = "list";
-    console.log(config);
     return db.save(data, config);
 }
 function select(data) {

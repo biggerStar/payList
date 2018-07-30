@@ -9,15 +9,7 @@ var session = require('express-session'); var RedisStore = require('connect-redi
 var encrypt = require('./../app/encrypt.js');
 var config = require("./../conf/config.js");
 var mongoose = require('mongoose');
-/*
- *
-router.all('*',function(req,res,next) {
-    console.log('login get');
-    console.log(req.cookie);
-    next();
 
-});
-*/
 var userSchema = new mongoose.Schema({
     name:String,
     id:Object,

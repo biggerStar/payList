@@ -60,7 +60,6 @@ export class InvestmentAddComponent implements OnInit {
           this.router.navigate(["/finance/list"])
       }
     })
-    console.log(list);
   }
 
   _dateTimeFormat(dateFormat) : string{

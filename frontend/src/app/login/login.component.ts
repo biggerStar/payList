@@ -27,8 +27,6 @@ export class LoginComponent implements OnInit {
    this.loginService.login(this.login).subscribe(response => {
      if (response && response["token"]) {
        this.token.put('token',response['token']);
-       console.log("login:set token");
-       console.log(this.token.get('token'))
        this.router.navigate(["/paylist/list"])
      } 
    }, error => {

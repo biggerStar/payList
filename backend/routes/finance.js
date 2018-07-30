@@ -29,7 +29,6 @@ router.post('/delete', function(req, res, next) {
 
 router.post('/update', function(req, res) {
     var data = req.body;
-    console.log(data)
     db.updateFinance(data, model.updateFinanceModel, function(err,callback) {
         if (err) {
             console.log(err);
